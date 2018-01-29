@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate {
+class HomeViewController: UIViewController {
     
     //MARK: - Variables
     let WEATHER_URL = "api.openweathermap.org/data/2.5/weather"
@@ -23,17 +23,43 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var windLabel: UILabel!
     
     //MARK: - VC Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        locationManager.requestAlwaysAuthorization()
+        setLocationManager()
     }
+    
+    //MARK: - Methods
     
 }
 
-//extension HomeViewController: CLLocationManagerDelegate {
-//
-//}
+//MARK: - CLLocationManagerDelegate
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    fileprivate func setLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[locations.count - 1]
+        if location.horizontalAccuracy > 0 {
+            locationManager.stopUpdatingLocation()
+            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
+            
+            let currentLocation: [String : String] = ["lat": String(location.coordinate.latitude),
+                                                      "lon": String(location.coordinate.longitude),
+                                                      "appid": APP_ID]
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+        locationLabel.text = "Location unavailable"
+    }
+    
+}
 
