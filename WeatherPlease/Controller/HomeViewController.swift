@@ -8,14 +8,16 @@
 
 import UIKit
 import CoreLocation
+import Alamofire
+import SwiftyJSON
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     //MARK: - Variables
-    let WEATHER_URL = "api.openweathermap.org/data/2.5/weather"
-    let APP_ID = "6f3162859065dbac6ceb0d7e8ff4fb98"
+    private let WEATHER_URL = "api.openweathermap.org/data/2.5/weather"
+    private let APP_ID = "6f3162859065dbac6ceb0d7e8ff4fb98"
     
-    let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
 
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
@@ -30,7 +32,18 @@ class HomeViewController: UIViewController {
         setLocationManager()
     }
     
-    //MARK: - Methods
+    //MARK: - Networking
+    private func getWeatherData(fromURL url: String, withParameters parameters: [String: String]) {
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { (response) in
+            if response.result.isSuccess {
+                print("Success. Got the weather data")
+                
+            } else {
+                print("Error: \(response.result.error)")
+                self.locationLabel.text = "Connection issues"
+            }
+        }
+    }
     
 }
 
@@ -50,9 +63,10 @@ extension HomeViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
             
-            let currentLocation: [String : String] = ["lat": String(location.coordinate.latitude),
+            let requestParams: [String : String] = ["lat": String(location.coordinate.latitude),
                                                       "lon": String(location.coordinate.longitude),
                                                       "appid": APP_ID]
+            getWeatherData(fromURL: WEATHER_URL, withParameters: requestParams)
         }
     }
     
