@@ -27,14 +27,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="6rj-Jw-tKH">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Piv-q3-W06" userLabel="Refresh Button">
-                                <rect key="frame" x="333" y="40" width="22" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="ftR-CS-Hki"/>
-                                    <constraint firstAttribute="width" constant="22" id="gjr-KR-ydZ"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="refresh"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching location..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMg-Ya-hbU" userLabel="Location Label">
                                 <rect key="frame" x="0.0" y="89" width="375" height="29"/>
                                 <constraints>
@@ -45,17 +37,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-Uf-fUP" userLabel="Weather Image View">
-                                <rect key="frame" x="54" y="118" width="267" height="267"/>
+                                <rect key="frame" x="54" y="119" width="267" height="267"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="dhf-Uf-fUP" secondAttribute="height" multiplier="1:1" id="Gf8-yE-y2p"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--ºC" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Mi-QX-weW" userLabel="Location Label">
-                                <rect key="frame" x="20" y="385" width="335" height="69"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--ºC" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Mi-QX-weW" userLabel="Temperature Label">
+                                <rect key="frame" x="20" y="386" width="335" height="69"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="69" id="YBe-x0-0zM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="60"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- m/s" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zi8-17-3Z3" userLabel="Wind Label">
+                                <rect key="frame" x="20" y="455" width="335" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="Dbr-Jz-Xhl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="35"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -68,15 +69,17 @@
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tabBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- m/s" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zi8-17-3Z3" userLabel="Location Label">
-                                <rect key="frame" x="20" y="454" width="335" height="42"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Piv-q3-W06" userLabel="Refresh Button">
+                                <rect key="frame" x="333" y="40" width="22" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="Dbr-Jz-Xhl"/>
+                                    <constraint firstAttribute="height" constant="22" id="ftR-CS-Hki"/>
+                                    <constraint firstAttribute="width" secondItem="Piv-q3-W06" secondAttribute="height" multiplier="1:1" id="ltT-37-Egy"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="35"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" image="refresh"/>
+                                <connections>
+                                    <action selector="refresh:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2uS-xW-DCN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -88,7 +91,7 @@
                             <constraint firstItem="MMg-Ya-hbU" firstAttribute="top" secondItem="Piv-q3-W06" secondAttribute="bottom" constant="27" id="QjM-5g-wgG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Zi8-17-3Z3" secondAttribute="trailing" constant="20" id="THh-gh-9jm"/>
                             <constraint firstItem="6rj-Jw-tKH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VsE-Vc-YRu"/>
-                            <constraint firstItem="dhf-Uf-fUP" firstAttribute="top" secondItem="MMg-Ya-hbU" secondAttribute="bottom" id="Wz4-gr-58C"/>
+                            <constraint firstItem="dhf-Uf-fUP" firstAttribute="top" secondItem="MMg-Ya-hbU" secondAttribute="bottom" constant="1" id="Wz4-gr-58C"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Piv-q3-W06" secondAttribute="trailing" constant="20" id="a9F-Nf-DD0"/>
                             <constraint firstItem="Zi8-17-3Z3" firstAttribute="top" secondItem="3Mi-QX-weW" secondAttribute="bottom" id="aS4-8S-Ptd"/>
                             <constraint firstItem="Piv-q3-W06" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="dMa-5q-TVP"/>
@@ -106,6 +109,7 @@
                     </view>
                     <connections>
                         <outlet property="locationLabel" destination="MMg-Ya-hbU" id="hTi-UT-KBN"/>
+                        <outlet property="refreshButton" destination="Piv-q3-W06" id="aEg-zb-xt6"/>
                         <outlet property="temperatureLabel" destination="3Mi-QX-weW" id="dMv-d3-V3f"/>
                         <outlet property="weatherImage" destination="dhf-Uf-fUP" id="eiq-Dt-Dfy"/>
                         <outlet property="windLabel" destination="Zi8-17-3Z3" id="gUA-pi-bCH"/>
