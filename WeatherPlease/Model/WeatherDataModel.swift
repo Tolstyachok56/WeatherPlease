@@ -29,7 +29,7 @@ final class WeatherDataModel {
         case 511, 600...622:
             return "snow"
         case 701...781:
-            return "clouds2"
+            return "fog"
         case 800:
             return "sun"
         case 801, 951:

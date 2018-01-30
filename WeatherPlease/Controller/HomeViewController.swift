@@ -14,18 +14,23 @@ import SwiftyJSON
 final class HomeViewController: UIViewController {
     
     //MARK: - Variables
+    
     private let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather/"
     private let APP_ID = "6f3162859065dbac6ceb0d7e8ff4fb98"
     
     private let locationManager = CLLocationManager()
-    let weatherDataModel = WeatherDataModel()
+    private let weatherDataModel = WeatherDataModel()
     
+    // weather ui
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var windLabel: UILabel!
     
+    // refresh button
     @IBOutlet weak var refreshButton: UIButton!
+    private var rotateRefreshTimer = Timer()
+    private var rotateRefreshDegree = CGFloat.pi / 180
     
     //MARK: - VC Lifecycle
     
@@ -36,15 +41,20 @@ final class HomeViewController: UIViewController {
     }
     
     //MARK: - Networking
+    
     private func getWeatherData(fromURL url: String, withParameters parameters: [String: String]) {
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON { (response) in
             if response.result.isSuccess {
-                //print("Success. Got the weather data")
+                print("Success. Got the weather data")
+                self.rotateRefreshTimer.invalidate()
                 let weatherJSON: JSON = JSON(response.result.value!)
                 self.updateWeatherData(json: weatherJSON)
             } else {
                 print("Error: \(response.result.error!)")
+                self.rotateRefreshTimer.invalidate()
                 self.locationLabel.text = "Connection issues"
+                self.temperatureLabel.text = "--ºC"
+                self.windLabel.text = "--m/s"
             }
         }
     }
@@ -76,11 +86,29 @@ final class HomeViewController: UIViewController {
     // MARK: - Refresh
     
     @IBAction func refresh(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
+            self.refreshButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
+        }, completion: nil)
+        
+        rotateRefreshTimer = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(rotateRefreshButton), userInfo: nil, repeats: true)
+        
         locationManager.startUpdatingLocation()
     }
+    
+    @objc private func rotateRefreshButton() {
+        UIView.animate(withDuration: 0.02, delay: 0, options: .curveLinear, animations: {
+            self.refreshButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        }) { (finished) in
+            self.rotateRefreshDegree += CGFloat.pi / 180
+        }
+    }
+
+    
 }
 
+
 //MARK: - CLLocationManagerDelegate
+
 extension HomeViewController: CLLocationManagerDelegate {
     
     fileprivate func setLocationManager() {
@@ -94,7 +122,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
-            //print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
+            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
             
             let requestParams: [String : String] = ["lat": String(location.coordinate.latitude),
                                                       "lon": String(location.coordinate.longitude),
@@ -106,6 +134,8 @@ extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
         locationLabel.text = "Location unavailable"
+        temperatureLabel.text = "--ºC"
+        windLabel.text = "--m/s"
     }
     
 }
