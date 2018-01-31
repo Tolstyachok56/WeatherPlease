@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XCQ-iT-MSe">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,7 +19,7 @@
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="WeatherPlease" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Home View Controller" customClass="HomeViewController" customModule="WeatherPlease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,15 +60,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qTd-Yl-73l">
-                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.12" colorSpace="custom" customColorSpace="displayP3"/>
-                                <items>
-                                    <tabBarItem title="Home" id="98N-RE-JC9"/>
-                                    <tabBarItem title="Notifications" id="lC2-DM-QI8"/>
-                                </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tabBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Piv-q3-W06" userLabel="Refresh Button">
                                 <rect key="frame" x="333" y="40" width="22" height="22"/>
                                 <constraints>
@@ -83,9 +74,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="qTd-Yl-73l" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="56w-ll-UVs"/>
                             <constraint firstItem="dhf-Uf-fUP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="54" id="6tw-ux-QMa"/>
-                            <constraint firstItem="qTd-Yl-73l" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7Px-tl-f97"/>
                             <constraint firstItem="3Mi-QX-weW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="G7x-0E-C2w"/>
                             <constraint firstItem="6rj-Jw-tKH" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="MWo-5z-rmc"/>
                             <constraint firstItem="MMg-Ya-hbU" firstAttribute="top" secondItem="Piv-q3-W06" secondAttribute="bottom" constant="27" id="QjM-5g-wgG"/>
@@ -95,7 +84,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Piv-q3-W06" secondAttribute="trailing" constant="20" id="a9F-Nf-DD0"/>
                             <constraint firstItem="Zi8-17-3Z3" firstAttribute="top" secondItem="3Mi-QX-weW" secondAttribute="bottom" id="aS4-8S-Ptd"/>
                             <constraint firstItem="Piv-q3-W06" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="dMa-5q-TVP"/>
-                            <constraint firstItem="qTd-Yl-73l" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="eYb-ab-yHm"/>
                             <constraint firstItem="Zi8-17-3Z3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="euG-14-Pu5"/>
                             <constraint firstItem="6rj-Jw-tKH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gCh-cG-uwH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3Mi-QX-weW" secondAttribute="trailing" constant="20" id="okE-gG-t8c"/>
@@ -107,6 +95,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="homeActive" id="72q-4m-BbR"/>
                     <connections>
                         <outlet property="locationLabel" destination="MMg-Ya-hbU" id="hTi-UT-KBN"/>
                         <outlet property="refreshButton" destination="Piv-q3-W06" id="aEg-zb-xt6"/>
@@ -117,11 +106,95 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.800000000000001" y="31.934032983508249"/>
+            <point key="canvasLocation" x="364" y="31.934032983508249"/>
+        </scene>
+        <!--Notifications-->
+        <scene sceneID="w0B-H3-UlK">
+            <objects>
+                <viewController id="2FY-dg-8gE" customClass="NotificationsViewController" customModule="WeatherPlease" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="k17-qE-rSC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="etJ-3i-jSr">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HjQ-bP-8nl">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="etJ-3i-jSr" firstAttribute="top" secondItem="k17-qE-rSC" secondAttribute="top" id="2hr-lh-dCB"/>
+                            <constraint firstItem="HjQ-bP-8nl" firstAttribute="leading" secondItem="qyh-I5-zZk" secondAttribute="leading" id="F5t-dv-ZDz"/>
+                            <constraint firstItem="HjQ-bP-8nl" firstAttribute="trailing" secondItem="qyh-I5-zZk" secondAttribute="trailing" id="TBi-ED-UfF"/>
+                            <constraint firstItem="etJ-3i-jSr" firstAttribute="trailing" secondItem="qyh-I5-zZk" secondAttribute="trailing" id="baz-oC-Mjw"/>
+                            <constraint firstItem="etJ-3i-jSr" firstAttribute="leading" secondItem="qyh-I5-zZk" secondAttribute="leading" id="i3d-jD-mle"/>
+                            <constraint firstAttribute="bottom" secondItem="etJ-3i-jSr" secondAttribute="bottom" id="lmV-fj-nL8"/>
+                            <constraint firstItem="HjQ-bP-8nl" firstAttribute="bottom" secondItem="qyh-I5-zZk" secondAttribute="bottom" id="owQ-sd-3EV"/>
+                            <constraint firstItem="HjQ-bP-8nl" firstAttribute="top" secondItem="qyh-I5-zZk" secondAttribute="top" id="wgo-vw-hul"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qyh-I5-zZk"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Notifications" id="zEr-j0-8OD">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="dPi-QR-0Zf"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="2sX-52-7bp"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NuX-bd-9GO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1252" y="747.9760119940031"/>
+        </scene>
+        <!--NavBar Notifications-->
+        <scene sceneID="J36-6k-dKj">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tF7-1e-64f" userLabel="NavBar Notifications" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notifications" image="notifyActive" id="znl-Rz-DTb"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nKq-5i-bif">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="85b-LF-MPR">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="2FY-dg-8gE" kind="relationship" relationship="rootViewController" id="gSY-av-XJE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e5y-va-VTP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="364" y="747.9760119940031"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="RJz-aE-W0s">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="XCQ-iT-MSe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iS1-VR-i3N">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ddz-7R-xeU"/>
+                        <segue destination="tF7-1e-64f" kind="relationship" relationship="viewControllers" id="FGl-EI-hTO"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y1P-l4-Le5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-540" y="397"/>
         </scene>
     </scenes>
     <resources>
         <image name="background" width="187" height="333"/>
+        <image name="homeActive" width="25" height="25"/>
+        <image name="notifyActive" width="25" height="25"/>
         <image name="refresh" width="256" height="256"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
