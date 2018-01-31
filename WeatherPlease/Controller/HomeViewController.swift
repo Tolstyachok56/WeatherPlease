@@ -29,49 +29,14 @@ final class HomeViewController: UIViewController {
     
     // refresh button
     @IBOutlet weak var refreshButton: UIButton!
-    private var rotateRefreshTimer = Timer()
-    private var rotateRefreshDegree = CGFloat.pi / 180
+    private var rotateTimer = Timer()
+    private var rotateDegree = CGFloat.pi/3
     
     //MARK: - VC Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setLocationManager()
-    }
-    
-    //MARK: - Networking
-    
-    private func getWeatherData(fromURL url: String, withParameters parameters: [String: String]) {
-        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { (response) in
-            if response.result.isSuccess {
-                print("Success. Got the weather data")
-                self.rotateRefreshTimer.invalidate()
-                let weatherJSON: JSON = JSON(response.result.value!)
-                self.updateWeatherData(json: weatherJSON)
-            } else {
-                print("Error: \(response.result.error!)")
-                self.rotateRefreshTimer.invalidate()
-                self.locationLabel.text = "Connection issues"
-                self.temperatureLabel.text = "--ºC"
-                self.windLabel.text = "--m/s"
-            }
-        }
-    }
-    
-    //MARK: - JSON parsing
-    
-    private func updateWeatherData(json: JSON) {
-        if let temperatureResult = json["main"]["temp"].double {
-            weatherDataModel.temperature = Int(temperatureResult - 273.15)
-            weatherDataModel.locationName = json["name"].stringValue
-            weatherDataModel.condition = json["weather"][0]["id"].intValue
-            weatherDataModel.windSpeed = json["wind"]["speed"].intValue
-            weatherDataModel.weatherImageName = weatherDataModel.updateWeatherImage(forConditionID: weatherDataModel.condition)
-            updateUIWithWeatherData()
-        } else {
-            locationLabel.text = "Weather unavailable"
-        }
     }
     
     //MARK: - Update UI
@@ -83,24 +48,53 @@ final class HomeViewController: UIViewController {
         windLabel.text = "\(weatherDataModel.windSpeed) m/s"
     }
     
-    // MARK: - Refresh
+    //MARK: - JSON parsing
     
-    @IBAction func refresh(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
-            self.refreshButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
-        }, completion: nil)
-        
-        rotateRefreshTimer = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(rotateRefreshButton), userInfo: nil, repeats: true)
-        
-        locationManager.startUpdatingLocation()
+    private func updateWeatherData(json: JSON) {
+        if let temperatureResult = json["main"]["temp"].double {
+            weatherDataModel.temperature = Int(temperatureResult - 273.15)
+            weatherDataModel.locationName = json["name"].stringValue
+            weatherDataModel.condition = json["weather"][0]["id"].intValue
+            weatherDataModel.windSpeed = json["wind"]["speed"].intValue
+            weatherDataModel.weatherImageName = weatherDataModel.getWeatherImage(forConditionID: weatherDataModel.condition)
+            updateUIWithWeatherData()
+        } else {
+            locationLabel.text = "Weather unavailable"
+        }
     }
     
-    @objc private func rotateRefreshButton() {
-        UIView.animate(withDuration: 0.02, delay: 0, options: .curveLinear, animations: {
-            self.refreshButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        }) { (finished) in
-            self.rotateRefreshDegree += CGFloat.pi / 180
+    //MARK: - Networking
+    
+    private func getWeatherData(fromURL url: String, withParameters parameters: [String: String]) {
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { (response) in
+            if response.result.isSuccess {
+                print("Success. Got the weather data")
+                self.rotateTimer.invalidate()
+                let weatherJSON: JSON = JSON(response.result.value!)
+                self.updateWeatherData(json: weatherJSON)
+            } else {
+                print("Error: \(response.result.error!)")
+                self.rotateTimer.invalidate()
+                self.locationLabel.text = "Connection issues"
+                self.temperatureLabel.text = "--ºC"
+                self.windLabel.text = "--m/s"
+            }
         }
+    }
+
+    // MARK: - Refresh
+    
+    @objc private func rotateRefreshButton() {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
+            self.refreshButton.transform = CGAffineTransform(rotationAngle: self.rotateDegree)
+        }) { (finished) in
+            self.rotateDegree += CGFloat.pi/3
+        }
+    }
+    
+    @IBAction func refresh(_ sender: UIButton) {
+        rotateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(rotateRefreshButton), userInfo: nil, repeats: true)
+        locationManager.startUpdatingLocation()
     }
 
     
@@ -111,19 +105,19 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: CLLocationManagerDelegate {
     
-    fileprivate func setLocationManager() {
+    private func setLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        refresh(refreshButton)
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
             print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
-            
             let requestParams: [String : String] = ["lat": String(location.coordinate.latitude),
                                                       "lon": String(location.coordinate.longitude),
                                                       "appid": APP_ID]
@@ -131,7 +125,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
         locationLabel.text = "Location unavailable"
         temperatureLabel.text = "--ºC"

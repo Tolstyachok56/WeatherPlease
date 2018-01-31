@@ -6,17 +6,15 @@
 //  Copyright © 2018 Виктория Бадисова. All rights reserved.
 //
 
-import Foundation
-
 final class WeatherDataModel {
     
-    var temperature: Int = 0
-    var windSpeed: Int = 0
-    var condition: Int = 0
-    var locationName: String = ""
-    var weatherImageName: String = "unknown"
+    internal var temperature: Int = 0
+    internal var windSpeed: Int = 0
+    internal var condition: Int = 0
+    internal var locationName: String = ""
+    internal var weatherImageName: String = "unknown"
     
-    func updateWeatherImage(forConditionID id: Int) -> String {
+    internal func getWeatherImage(forConditionID id: Int) -> String {
         switch id {
         case 200...232:
             return "storm"
