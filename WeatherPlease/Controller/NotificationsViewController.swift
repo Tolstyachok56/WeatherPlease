@@ -13,17 +13,7 @@ final class NotificationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "notifyNotActive"), selectedImage: UIImage(named: "notifyActive"))
-//    }
 
     /*
     // MARK: - Navigation
@@ -35,4 +25,29 @@ final class NotificationsViewController: UIViewController {
     }
     */
 
+}
+
+extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    //MARK: - UITableViewDataSource
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
+        cell.configure()
+        return cell
+    }
+    
+    //MARK: - UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90.0
+    }
+    
+    
+    
+    
 }

@@ -14,6 +14,12 @@
 		0410CBAC201F343F00D86E29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0410CBAB201F343F00D86E29 /* Assets.xcassets */; };
 		0410CBAF201F343F00D86E29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0410CBAD201F343F00D86E29 /* LaunchScreen.storyboard */; };
 		0458CC2B201F4C12004A5BBF /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458CC2A201F4C12004A5BBF /* WeatherDataModel.swift */; };
+		04CE493820285C88007941F7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE493720285C88007941F7 /* CoreDataManager.swift */; };
+		04CE493B202861DF007941F7 /* WeatherNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE493A202861DF007941F7 /* WeatherNotification.swift */; };
+		04CE493D202867B9007941F7 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */; };
+		04CE494220286F1C007941F7 /* deskBell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04CE494120286F1C007941F7 /* deskBell.mp3 */; };
+		04CE494420286F34007941F7 /* icyBell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04CE494320286F34007941F7 /* icyBell.mp3 */; };
+		04CE494620286F4E007941F7 /* slightBell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04CE494520286F4D007941F7 /* slightBell.mp3 */; };
 		04F6894820220C46009A06DF /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6894720220C46009A06DF /* NotificationsViewController.swift */; };
 		1A3A3E3A6CAA4707C158F08E /* Pods_WeatherPlease.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D5B49B500E30EF5CE228FE /* Pods_WeatherPlease.framework */; };
 /* End PBXBuildFile section */
@@ -28,6 +34,12 @@
 		0410CBAE201F343F00D86E29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0410CBB0201F343F00D86E29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0458CC2A201F4C12004A5BBF /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
+		04CE493720285C88007941F7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		04CE493A202861DF007941F7 /* WeatherNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNotification.swift; sourceTree = "<group>"; };
+		04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = WeatherPlease/Controller/NotificationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		04CE494120286F1C007941F7 /* deskBell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = deskBell.mp3; sourceTree = "<group>"; };
+		04CE494320286F34007941F7 /* icyBell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = icyBell.mp3; sourceTree = "<group>"; };
+		04CE494520286F4D007941F7 /* slightBell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slightBell.mp3; sourceTree = "<group>"; };
 		04F6894720220C46009A06DF /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		D1D5B49B500E30EF5CE228FE /* Pods_WeatherPlease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherPlease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA1990B92C7814ECBF275DFF /* Pods-WeatherPlease.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherPlease.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherPlease/Pods-WeatherPlease.debug.xcconfig"; sourceTree = "<group>"; };
@@ -67,11 +79,14 @@
 		0410CBA0201F343F00D86E29 /* WeatherPlease */ = {
 			isa = PBXGroup;
 			children = (
-				0458CC28201F4B57004A5BBF /* View */,
-				0458CC29201F4BAD004A5BBF /* Model */,
-				0458CC27201F4B24004A5BBF /* Controller */,
 				0410CBAB201F343F00D86E29 /* Assets.xcassets */,
+				04CE494020286EFA007941F7 /* SoundAssets */,
 				0410CBB0201F343F00D86E29 /* Info.plist */,
+				04CE493920285DA3007941F7 /* App */,
+				0458CC27201F4B24004A5BBF /* Controller */,
+				0458CC29201F4BAD004A5BBF /* Model */,
+				0458CC28201F4B57004A5BBF /* View */,
+				04CE493720285C88007941F7 /* CoreDataManager.swift */,
 				0410CBA8201F343F00D86E29 /* WeatherPlease.xcdatamodeld */,
 			);
 			path = WeatherPlease;
@@ -80,9 +95,9 @@
 		0458CC27201F4B24004A5BBF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0410CBA1201F343F00D86E29 /* AppDelegate.swift */,
 				0410CBA3201F343F00D86E29 /* HomeViewController.swift */,
 				04F6894720220C46009A06DF /* NotificationsViewController.swift */,
+				04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -100,8 +115,27 @@
 			isa = PBXGroup;
 			children = (
 				0458CC2A201F4C12004A5BBF /* WeatherDataModel.swift */,
+				04CE493A202861DF007941F7 /* WeatherNotification.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		04CE493920285DA3007941F7 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0410CBA1201F343F00D86E29 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		04CE494020286EFA007941F7 /* SoundAssets */ = {
+			isa = PBXGroup;
+			children = (
+				04CE494120286F1C007941F7 /* deskBell.mp3 */,
+				04CE494320286F34007941F7 /* icyBell.mp3 */,
+				04CE494520286F4D007941F7 /* slightBell.mp3 */,
+			);
+			path = SoundAssets;
 			sourceTree = "<group>";
 		};
 		1D8E3FA9D176735DB4A8CFE0 /* Pods */ = {
@@ -188,9 +222,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04CE494620286F4E007941F7 /* slightBell.mp3 in Resources */,
+				04CE494220286F1C007941F7 /* deskBell.mp3 in Resources */,
 				0410CBAF201F343F00D86E29 /* LaunchScreen.storyboard in Resources */,
 				0410CBAC201F343F00D86E29 /* Assets.xcassets in Resources */,
 				0410CBA7201F343F00D86E29 /* Main.storyboard in Resources */,
+				04CE494420286F34007941F7 /* icyBell.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,11 +294,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04CE493820285C88007941F7 /* CoreDataManager.swift in Sources */,
 				04F6894820220C46009A06DF /* NotificationsViewController.swift in Sources */,
 				0458CC2B201F4C12004A5BBF /* WeatherDataModel.swift in Sources */,
 				0410CBAA201F343F00D86E29 /* WeatherPlease.xcdatamodeld in Sources */,
+				04CE493D202867B9007941F7 /* NotificationTableViewCell.swift in Sources */,
 				0410CBA4201F343F00D86E29 /* HomeViewController.swift in Sources */,
 				0410CBA2201F343F00D86E29 /* AppDelegate.swift in Sources */,
+				04CE493B202861DF007941F7 /* WeatherNotification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

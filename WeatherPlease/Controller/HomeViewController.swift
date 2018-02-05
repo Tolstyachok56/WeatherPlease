@@ -39,10 +39,6 @@ final class HomeViewController: UIViewController {
         setLocationManager()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "homeNotActive"), selectedImage: UIImage(named: "homeActive"))
-//    }
-    
     //MARK: - Update UI
     
     private func updateUIWithWeatherData() {
