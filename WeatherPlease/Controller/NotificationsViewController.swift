@@ -10,20 +10,32 @@ import UIKit
 
 final class NotificationsViewController: UIViewController {
 
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
-
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let destination = segue.destination as? AddEditViewController {
+            destination.hidesBottomBarWhenPushed = true
+            
+            if segue.identifier == "toAdd" {
+                destination.viewTitle = "Add"
+            } else if segue.identifier == "toEdit" {
+                destination.viewTitle = "Edit"
+            }
+        }
     }
-    */
+    
+    @IBAction func editPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "toEdit", sender: sender)
+    }
+    
 
 }
 
@@ -37,7 +49,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
-        cell.configure()
+        cell.configure(time: "10:00", repeatWeekdays: "Wed")
         return cell
     }
     

@@ -21,12 +21,12 @@ class NotificationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure() {
-        self.textLabel?.text = "10:00"
+    func configure(time: String, repeatWeekdays: String) {
+        self.textLabel?.text = time
         self.textLabel?.textColor = .white
         self.textLabel?.font = self.textLabel?.font.withSize(50)
         
-        self.detailTextLabel?.text = "Wednesday"
+        self.detailTextLabel?.text = repeatWeekdays
         self.detailTextLabel?.textColor = .white
         self.detailTextLabel?.font = self.detailTextLabel?.font.withSize(14)
         

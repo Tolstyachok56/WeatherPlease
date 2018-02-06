@@ -13,15 +13,27 @@ class CoreDataManager {
     static let instance = CoreDataManager()
     private init() {}
     
-    // MARK: - Entity for name
+    // Entity for name
     
     func entity(forName entityName: String) -> NSEntityDescription {
-        return NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContainer)!
+        return NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)!
+    }
+    
+    // Fetched Results Controller for Entity Name
+    
+    func fetchedResultsController(entityName: String, keyForSort: String) -> NSFetchedResultsController<NSManagedObject> {
+        
+        let fetchedRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        fetchedRequest.sortDescriptors = [NSSortDescriptor(key: keyForSort, ascending: true)]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchedRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        return fetchedResultsController
     }
     
     // MARK: - Core Data stack
     
-    lazy var managedObjectContainer = self.persistentContainer.viewContext
+    lazy var managedObjectContext = self.persistentContainer.viewContext
     
     lazy var persistentContainer: NSPersistentContainer = {
         

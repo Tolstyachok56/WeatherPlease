@@ -142,13 +142,80 @@
                         <viewLayoutGuide key="safeArea" id="qyh-I5-zZk"/>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="zEr-j0-8OD">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="dPi-QR-0Zf"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="2sX-52-7bp"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="dPi-QR-0Zf">
+                            <connections>
+                                <action selector="editPressed:" destination="2FY-dg-8gE" id="UWj-l0-1tk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="2sX-52-7bp">
+                            <connections>
+                                <segue destination="VPN-l2-DtG" kind="show" identifier="toAdd" id="DQq-it-2aa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="VPN-l2-DtG" kind="show" identifier="toEdit" id="ml0-7I-1GY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NuX-bd-9GO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1252" y="747.9760119940031"/>
+        </scene>
+        <!--Edit-->
+        <scene sceneID="kzU-ZN-cce">
+            <objects>
+                <viewController id="VPN-l2-DtG" customClass="AddEditViewController" customModule="WeatherPlease" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GYu-sf-hKI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="SIB-b2-1IS">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Pq-Ld-WLM">
+                                <rect key="frame" x="0.0" y="280" width="375" height="387"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="VPN-l2-DtG" id="D4U-jE-c5u"/>
+                                    <outlet property="delegate" destination="VPN-l2-DtG" id="wdP-BH-bgV"/>
+                                </connections>
+                            </tableView>
+                            <datePicker contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="a0p-2E-LQn">
+                                <rect key="frame" x="0.0" y="64" width="375" height="216"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <date key="date" timeIntervalSinceReferenceDate="539609816.92215097">
+                                    <!--2018-02-06 11:36:56 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="a0p-2E-LQn" firstAttribute="top" secondItem="dj5-Fk-Alb" secondAttribute="top" id="0Qc-ud-o63"/>
+                            <constraint firstItem="SIB-b2-1IS" firstAttribute="leading" secondItem="dj5-Fk-Alb" secondAttribute="leading" id="3BL-qo-b6X"/>
+                            <constraint firstItem="a0p-2E-LQn" firstAttribute="trailing" secondItem="dj5-Fk-Alb" secondAttribute="trailing" id="B5N-7r-AzI"/>
+                            <constraint firstItem="4Pq-Ld-WLM" firstAttribute="top" secondItem="a0p-2E-LQn" secondAttribute="bottom" id="D6M-nu-mFT"/>
+                            <constraint firstItem="SIB-b2-1IS" firstAttribute="trailing" secondItem="dj5-Fk-Alb" secondAttribute="trailing" id="Jhq-Gu-wUK"/>
+                            <constraint firstAttribute="bottom" secondItem="SIB-b2-1IS" secondAttribute="bottom" id="NoR-oW-WCS"/>
+                            <constraint firstItem="4Pq-Ld-WLM" firstAttribute="trailing" secondItem="dj5-Fk-Alb" secondAttribute="trailing" id="Pju-mn-tDI"/>
+                            <constraint firstItem="4Pq-Ld-WLM" firstAttribute="leading" secondItem="dj5-Fk-Alb" secondAttribute="leading" id="itR-Jk-eav"/>
+                            <constraint firstAttribute="bottom" secondItem="4Pq-Ld-WLM" secondAttribute="bottom" id="lgF-j8-Cmp"/>
+                            <constraint firstItem="a0p-2E-LQn" firstAttribute="leading" secondItem="dj5-Fk-Alb" secondAttribute="leading" id="uEw-nQ-mcc"/>
+                            <constraint firstItem="SIB-b2-1IS" firstAttribute="top" secondItem="GYu-sf-hKI" secondAttribute="top" id="vmO-LZ-8WC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="dj5-Fk-Alb"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit" id="w8g-eI-gjG">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5Lg-xi-sek"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Uqy-Za-SHp"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="timePicker" destination="a0p-2E-LQn" id="vPH-wx-UwG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F5A-cH-7vF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2080.8000000000002" y="747.9760119940031"/>
         </scene>
         <!--NavBar Notifications-->
         <scene sceneID="J36-6k-dKj">
@@ -202,5 +269,8 @@
         <image name="notifyActive" width="25" height="25"/>
         <image name="refresh" width="256" height="256"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ml0-7I-1GY"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
