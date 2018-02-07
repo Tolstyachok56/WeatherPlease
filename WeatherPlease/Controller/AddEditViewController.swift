@@ -12,7 +12,7 @@ class AddEditViewController: UIViewController {
     
     var fetchedResultsController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "time")
     var viewTitle: String = ""
-    
+    var notification: WeatherNotification?
     
     @IBOutlet weak var timePicker: UIDatePicker!
     
@@ -22,15 +22,19 @@ class AddEditViewController: UIViewController {
         
         self.navigationItem.title = viewTitle
         timePicker.setValuesForKeys(["textColor": UIColor.white, "highlightsToday": false])
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        print(timePicker)
     }
     
-
+    @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+        print("CANCEL")
+    }
+    
+    @IBAction func savePressed(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+        print("SAVE")
+    }
+    
     /*
     // MARK: - Navigation
 

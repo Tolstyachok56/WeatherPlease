@@ -206,8 +206,16 @@
                         <viewLayoutGuide key="safeArea" id="dj5-Fk-Alb"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit" id="w8g-eI-gjG">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5Lg-xi-sek"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Uqy-Za-SHp"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5Lg-xi-sek">
+                            <connections>
+                                <action selector="cancelPressed:" destination="VPN-l2-DtG" id="NLt-Qc-Peg"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Uqy-Za-SHp">
+                            <connections>
+                                <action selector="savePressed:" destination="VPN-l2-DtG" id="ur8-4C-PuL"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="timePicker" destination="a0p-2E-LQn" id="vPH-wx-UwG"/>
