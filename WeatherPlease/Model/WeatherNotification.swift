@@ -9,9 +9,8 @@ import Foundation
 
 struct WeatherNotification {
     var time: Date = Date()
-    var isEnable: Bool = false
+    var isOn: Bool = false
     var repeatWeekdays: [Int] = []
     var vibration: Bool = true
     var soundLabel: String = ""
-    
 }

@@ -39,30 +39,6 @@ final class HomeViewController: UIViewController {
         setLocationManager()
     }
     
-    //MARK: - Update UI
-    
-    private func updateUIWithWeatherData() {
-        locationLabel.text = weatherDataModel.locationName
-        weatherImage.image = UIImage(named: weatherDataModel.weatherImageName)
-        temperatureLabel.text = "\(weatherDataModel.temperature) ºC"
-        windLabel.text = "\(weatherDataModel.windSpeed) m/s"
-    }
-    
-    //MARK: - JSON parsing
-    
-    private func updateWeatherData(json: JSON) {
-        if let temperatureResult = json["main"]["temp"].double {
-            weatherDataModel.temperature = Int(temperatureResult - 273.15)
-            weatherDataModel.locationName = json["name"].stringValue
-            weatherDataModel.condition = json["weather"][0]["id"].intValue
-            weatherDataModel.windSpeed = json["wind"]["speed"].intValue
-            weatherDataModel.weatherImageName = weatherDataModel.getWeatherImage(forConditionID: weatherDataModel.condition)
-            updateUIWithWeatherData()
-        } else {
-            locationLabel.text = "Weather unavailable"
-        }
-    }
-    
     //MARK: - Networking
     
     private func getWeatherData(fromURL url: String, withParameters parameters: [String: String]) {
@@ -81,8 +57,37 @@ final class HomeViewController: UIViewController {
             }
         }
     }
-
+    
+    //MARK: - JSON parsing
+    
+    private func updateWeatherData(json: JSON) {
+        if let temperatureResult = json["main"]["temp"].double {
+            weatherDataModel.temperature = Int(temperatureResult - 273.15)
+            weatherDataModel.locationName = json["name"].stringValue
+            weatherDataModel.condition = json["weather"][0]["id"].intValue
+            weatherDataModel.windSpeed = json["wind"]["speed"].intValue
+            weatherDataModel.weatherImageName = weatherDataModel.getWeatherImage(forConditionID: weatherDataModel.condition)
+            updateUIWithWeatherData()
+        } else {
+            locationLabel.text = "Weather unavailable"
+        }
+    }
+    
+    //MARK: - Update UI
+    
+    private func updateUIWithWeatherData() {
+        locationLabel.text = weatherDataModel.locationName
+        weatherImage.image = UIImage(named: weatherDataModel.weatherImageName)
+        temperatureLabel.text = "\(weatherDataModel.temperature) ºC"
+        windLabel.text = "\(weatherDataModel.windSpeed) m/s"
+    }
+    
     // MARK: - Refresh
+    
+    @IBAction func refresh(_ sender: UIButton) {
+        rotateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(rotateRefreshButton), userInfo: nil, repeats: true)
+        locationManager.startUpdatingLocation()
+    }
     
     @objc private func rotateRefreshButton() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
@@ -91,12 +96,6 @@ final class HomeViewController: UIViewController {
             self.rotateDegree += CGFloat.pi/3
         }
     }
-    
-    @IBAction func refresh(_ sender: UIButton) {
-        rotateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(rotateRefreshButton), userInfo: nil, repeats: true)
-        locationManager.startUpdatingLocation()
-    }
-
     
 }
 

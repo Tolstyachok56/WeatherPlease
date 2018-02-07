@@ -12,25 +12,36 @@ class NotificationTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    func configure(time: String, repeatWeekdays: String) {
-        self.textLabel?.text = time
-        self.textLabel?.textColor = .white
-        self.textLabel?.font = self.textLabel?.font.withSize(50)
+    func configure(time: Date, repeatWeekdays: String, isOn: Bool) {
         
-        self.detailTextLabel?.text = repeatWeekdays
-        self.detailTextLabel?.textColor = .white
-        self.detailTextLabel?.font = self.detailTextLabel?.font.withSize(14)
+        let time = convertDateToTime(date: time)
+        configureLabel(self.textLabel!, text: time, color: .white, fontSize: 50)
+        
+        configureLabel(self.detailTextLabel!, text: repeatWeekdays, color: .white, fontSize: 14)
         
         self.backgroundColor = .clear
+        
+        let cellSwitch = UISwitch()
+        cellSwitch.isOn = isOn
+        self.accessoryView = cellSwitch
+    }
+    
+    private func convertDateToTime(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm"
+        return formatter.string(from: date)
+    }
+    
+    private func configureLabel(_ label: UILabel, text: String, color: UIColor, fontSize: CGFloat) {
+        label.text = text
+        label.textColor = color
+        label.font = label.font.withSize(fontSize)
     }
 
 }

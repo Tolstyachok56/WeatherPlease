@@ -10,12 +10,22 @@ import UIKit
 
 final class NotificationsViewController: UIViewController {
 
+    var notificationArray = [WeatherNotification.init(time: Date(),
+                                                      isOn: true,
+                                                      repeatWeekdays: [4,5,6],
+                                                      vibration: true,
+                                                      soundLabel: "deskBell"),
+                             WeatherNotification.init(time: Date(),
+                                                      isOn: false,
+                                                      repeatWeekdays: [1,2,3],
+                                                      vibration: false,
+                                                      soundLabel: "icyBell")]
     
-    
+    @IBOutlet weak var notificationsTableView: UITableView!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     // MARK: - Navigation
@@ -29,11 +39,23 @@ final class NotificationsViewController: UIViewController {
             } else if segue.identifier == "toEdit" {
                 destination.viewTitle = "Edit"
             }
+            
+            //TODO: - set/get data on/from add/edit view
         }
     }
     
+    //MARK: - Action
+    
     @IBAction func editPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "toEdit", sender: sender)
+        notificationsTableView.isEditing = !notificationsTableView.isEditing
+        
+        if notificationsTableView.isEditing {
+            editButton.title = "Done"
+            notificationsTableView.allowsSelection = true
+        } else {
+            editButton.title = "Edit"
+            notificationsTableView.allowsSelection = false
+        }
     }
     
 
@@ -44,12 +66,16 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     //MARK: - UITableViewDataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return notificationArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
-        cell.configure(time: "10:00", repeatWeekdays: "Wed")
+        
+        //TODO: - get data
+        
+        let notification = notificationArray[indexPath.row]
+        cell.configure(time: notification.time, repeatWeekdays: "Wed", isOn: notification.isOn)
         return cell
     }
     
@@ -59,9 +85,20 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         return 90.0
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            notificationArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
     
-    
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+        performSegue(withIdentifier: "toEdit", sender: self)
+    }
     
 }
