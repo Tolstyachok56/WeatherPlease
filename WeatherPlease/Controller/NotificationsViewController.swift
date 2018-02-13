@@ -10,12 +10,12 @@ import UIKit
 
 final class NotificationsViewController: UIViewController {
 
-    var notificationArray = [WeatherNotification.init(time: Date(),
+    var notificationArray = [WeatherNotification.init(date: Date(),
                                                       isOn: true,
                                                       repeatWeekdays: [4,5,6],
                                                       vibration: true,
                                                       soundLabel: "deskBell"),
-                             WeatherNotification.init(time: Date(),
+                             WeatherNotification.init(date: Date(),
                                                       isOn: false,
                                                       repeatWeekdays: [1,2,3],
                                                       vibration: false,
@@ -35,9 +35,10 @@ final class NotificationsViewController: UIViewController {
             destination.hidesBottomBarWhenPushed = true
             
             if segue.identifier == "toAdd" {
-                destination.viewTitle = "Add"
+                destination.navigationItem.title = "Add"
             } else if segue.identifier == "toEdit" {
-                destination.viewTitle = "Edit"
+                destination.navigationItem.title = "Edit"
+                destination.notification = sender as? WeatherNotification
             }
             
             //TODO: - set/get data on/from add/edit view
@@ -75,7 +76,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         //TODO: - get data
         
         let notification = notificationArray[indexPath.row]
-        cell.configure(time: notification.time, repeatWeekdays: "Wed", isOn: notification.isOn)
+        cell.configure(with: notification)
         return cell
     }
     
@@ -97,8 +98,15 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let notification = notificationArray[indexPath.row]
         tableView.cellForRow(at: indexPath)?.isSelected = false
-        performSegue(withIdentifier: "toEdit", sender: self)
+        performSegue(withIdentifier: "toEdit", sender: notification)
+    }
+    
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        var notification = notificationArray[indexPath.row]
+        notification.isOn = !notification.isOn
+        print("isOn pressed")
     }
     
 }

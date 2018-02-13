@@ -18,17 +18,16 @@ class NotificationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(time: Date, repeatWeekdays: String, isOn: Bool) {
+    func configure(with weatherNotification: WeatherNotification) {
         
-        let time = convertDateToTime(date: time)
-        configureLabel(self.textLabel!, text: time, color: .white, fontSize: 50)
+        configureLabel(self.textLabel!, text: weatherNotification.formattedTime, color: .white, fontSize: 50)
         
-        configureLabel(self.detailTextLabel!, text: repeatWeekdays, color: .white, fontSize: 14)
+        configureLabel(self.detailTextLabel!, text: weatherNotification.formattedWeekdays, color: .white, fontSize: 14)
         
         self.backgroundColor = .clear
         
         let cellSwitch = UISwitch()
-        cellSwitch.isOn = isOn
+        cellSwitch.isOn = weatherNotification.isOn
         self.accessoryView = cellSwitch
     }
     

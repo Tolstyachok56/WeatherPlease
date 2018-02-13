@@ -10,29 +10,26 @@ import UIKit
 
 class AddEditViewController: UIViewController {
     
-    var fetchedResultsController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "time")
-    var viewTitle: String = ""
+    var fetchedResultsController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "date")
     var notification: WeatherNotification?
     
     @IBOutlet weak var timePicker: UIDatePicker!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = viewTitle
-        timePicker.setValuesForKeys(["textColor": UIColor.white, "highlightsToday": false])
-        print(timePicker)
+        if notification == nil {
+            notification = WeatherNotification()
+        }
+        configureTimePicker()
     }
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
-        print("CANCEL")
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
-        print("SAVE")
     }
     
     /*
@@ -44,14 +41,20 @@ class AddEditViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    private func configureTimePicker() {
+        timePicker.date = (notification?.date)!
+        timePicker.setValuesForKeys(["textColor": UIColor.white, "highlightsToday": false])
+    }
+    
 }
 
 extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch self.viewTitle {
+        guard let viewTitle = self.navigationItem.title else {return 0}
+        switch viewTitle {
         case "Edit":
             return 4
         case "Add":
@@ -69,17 +72,19 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             cell = UITableViewCell(style: .value1, reuseIdentifier: "repeatCell")
             cell.textLabel?.text = "Repeat"
-            cell.detailTextLabel?.text = "Wednesday"
+            cell.detailTextLabel?.text = notification?.formattedWeekdays
             cell.accessoryType = .disclosureIndicator
         case 1:
             cell = UITableViewCell(style: .value1, reuseIdentifier: "soundCell")
             cell.textLabel?.text = "Sound"
-            cell.detailTextLabel?.text = "Desk Bell"
+            cell.detailTextLabel?.text = notification?.soundLabel
             cell.accessoryType = .disclosureIndicator
         case 2:
             cell = UITableViewCell(style: .default, reuseIdentifier: "vibrationCell")
             cell.textLabel?.text = "Vibration"
-            cell.accessoryView = UISwitch()
+            let vibrationSwitch = UISwitch()
+            vibrationSwitch.isOn = (notification?.isOn)!
+            cell.accessoryView = vibrationSwitch
         case 3:
             cell = UITableViewCell(style: .default, reuseIdentifier: "deleteButton")
             cell.textLabel?.text = "Delete"
@@ -95,7 +100,6 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     //MARK: - UITableViewDelegate
-    
     
     
 }
