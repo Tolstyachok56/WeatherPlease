@@ -7,25 +7,25 @@
 //
 
 import UIKit
+//import CoreData
 
 final class NotificationsViewController: UIViewController {
 
-    var notificationArray = [WeatherNotification.init(date: Date(),
-                                                      isOn: true,
-                                                      repeatWeekdays: [4,5,6],
-                                                      vibration: true,
-                                                      soundLabel: "deskBell"),
-                             WeatherNotification.init(date: Date(),
-                                                      isOn: false,
-                                                      repeatWeekdays: [1,2,3],
-                                                      vibration: false,
-                                                      soundLabel: "icyBell")]
+    var notificationArray = [WeatherNotification(date: Date(), isOn: true, repeatWeekdays: [4,5,6], vibration: true, soundLabel: "deskBell"),
+                             WeatherNotification(date: Date(), isOn: false, repeatWeekdays: [1,2], vibration: false, soundLabel: "icyBell")]
+    
+//    var fetchedResultController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "date")
     
     @IBOutlet weak var notificationsTableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        do {
+//            try fetchedResultController.performFetch()
+//        } catch {
+//            print(error)
+//        }
     }
     
     // MARK: - Navigation
@@ -36,10 +36,20 @@ final class NotificationsViewController: UIViewController {
             
             if segue.identifier == "toAdd" {
                 destination.navigationItem.title = "Add"
+                destination.editMode = false
             } else if segue.identifier == "toEdit" {
                 destination.navigationItem.title = "Edit"
-                destination.notification = sender as? WeatherNotification
+                destination.editMode = true
+                
             }
+            
+            if sender is WeatherNotification {
+                destination.notification = sender as? WeatherNotification
+            } else {
+                destination.notification = WeatherNotification()
+            }
+            
+            destination.delegate = self
             
             //TODO: - set/get data on/from add/edit view
         }
@@ -61,21 +71,21 @@ final class NotificationsViewController: UIViewController {
     
 
 }
-
+//MARK: -
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notificationArray.count
+//        guard let sections = fetchedResultController.sections else {return 0}
+//        return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
-        
-        //TODO: - get data
-        
         let notification = notificationArray[indexPath.row]
+//        let notification = fetchedResultController.object(at: indexPath) as! WeatherNotification
         cell.configure(with: notification)
         return cell
     }
@@ -101,12 +111,6 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         let notification = notificationArray[indexPath.row]
         tableView.cellForRow(at: indexPath)?.isSelected = false
         performSegue(withIdentifier: "toEdit", sender: notification)
-    }
-    
-    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        var notification = notificationArray[indexPath.row]
-        notification.isOn = !notification.isOn
-        print("isOn pressed")
     }
     
 }

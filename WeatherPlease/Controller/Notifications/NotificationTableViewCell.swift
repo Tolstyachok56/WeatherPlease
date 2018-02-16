@@ -20,10 +20,14 @@ class NotificationTableViewCell: UITableViewCell {
     
     func configure(with weatherNotification: WeatherNotification) {
         
-        configureLabel(self.textLabel!, text: weatherNotification.formattedTime, color: .white, fontSize: 50)
-        
-        configureLabel(self.detailTextLabel!, text: weatherNotification.formattedWeekdays, color: .white, fontSize: 14)
-        
+        configureLabel(self.textLabel!,
+                       text: weatherNotification.formattedTime,
+                       color: .white,
+                       fontSize: 50)
+        configureLabel(self.detailTextLabel!,
+                       text: weatherNotification.formattedWeekdays,
+                       color: .white,
+                       fontSize: 14)
         self.backgroundColor = .clear
         
         let cellSwitch = UISwitch()

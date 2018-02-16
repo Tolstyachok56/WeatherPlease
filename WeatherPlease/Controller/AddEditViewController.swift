@@ -7,20 +7,20 @@
 //
 
 import UIKit
+//import CoreData
 
 class AddEditViewController: UIViewController {
     
-    var fetchedResultsController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "date")
-    var notification: WeatherNotification?
+    //var fetchedResultsController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "date")
+    
+    var notification: WeatherNotification!
+    var delegate: NotificationsViewController!
+    var editMode: Bool!
     
     @IBOutlet weak var timePicker: UIDatePicker!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if notification == nil {
-            notification = WeatherNotification()
-        }
         configureTimePicker()
     }
     
@@ -29,6 +29,11 @@ class AddEditViewController: UIViewController {
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
+        //TODO: - Save data
+        if !editMode {
+            delegate.notificationArray.append(notification)
+        }
+        delegate.notificationsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -53,14 +58,10 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let viewTitle = self.navigationItem.title else {return 0}
-        switch viewTitle {
-        case "Edit":
+        if editMode {
             return 4
-        case "Add":
+        } else {
             return 3
-        default:
-            return 0
         }
     }
     
@@ -83,7 +84,7 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
             cell = UITableViewCell(style: .default, reuseIdentifier: "vibrationCell")
             cell.textLabel?.text = "Vibration"
             let vibrationSwitch = UISwitch()
-            vibrationSwitch.isOn = (notification?.isOn)!
+            vibrationSwitch.isOn = (notification?.vibration)!
             cell.accessoryView = vibrationSwitch
         case 3:
             cell = UITableViewCell(style: .default, reuseIdentifier: "deleteButton")
@@ -103,3 +104,4 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     
 }
+

@@ -6,13 +6,15 @@
 //  Copyright © 2018 Виктория Бадисова. All rights reserved.
 //
 import Foundation
+//import CoreData
 
 struct WeatherNotification {
+    
     var date: Date = Date()
-    var isOn: Bool = false
+    var isOn: Bool = true
     var repeatWeekdays: [Int] = []
     var vibration: Bool = true
-    var soundLabel: String = ""
+    var soundLabel: String = "deskBell"
 }
 
 extension WeatherNotification {
@@ -29,4 +31,5 @@ extension WeatherNotification {
         }
         return repeatWeekdays
     }
+    
 }
