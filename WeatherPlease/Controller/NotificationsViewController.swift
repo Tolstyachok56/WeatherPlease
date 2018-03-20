@@ -7,25 +7,18 @@
 //
 
 import UIKit
-//import CoreData
 
 final class NotificationsViewController: UIViewController {
 
     var notificationArray = [WeatherNotification(date: Date(), isOn: true, repeatWeekdays: [4,5,6], vibration: true, soundLabel: "deskBell"),
                              WeatherNotification(date: Date(), isOn: false, repeatWeekdays: [1,2], vibration: false, soundLabel: "icyBell")]
     
-//    var fetchedResultController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "date")
-    
     @IBOutlet weak var notificationsTableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        do {
-//            try fetchedResultController.performFetch()
-//        } catch {
-//            print(error)
-//        }
     }
     
     // MARK: - Navigation
@@ -43,8 +36,8 @@ final class NotificationsViewController: UIViewController {
                 
             }
             
-            if sender is WeatherNotification {
-                destination.notification = sender as? WeatherNotification
+            if let notificationIndex = notificationsTableView.indexPathForSelectedRow?.row {
+                destination.notification = notificationArray[notificationIndex]
             } else {
                 destination.notification = WeatherNotification()
             }
@@ -62,30 +55,29 @@ final class NotificationsViewController: UIViewController {
         
         if notificationsTableView.isEditing {
             editButton.title = "Done"
+            addButton.isEnabled = false
             notificationsTableView.allowsSelection = true
         } else {
             editButton.title = "Edit"
+            addButton.isEnabled = true
             notificationsTableView.allowsSelection = false
         }
     }
     
 
 }
-//MARK: -
+
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notificationArray.count
-//        guard let sections = fetchedResultController.sections else {return 0}
-//        return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
         let notification = notificationArray[indexPath.row]
-//        let notification = fetchedResultController.object(at: indexPath) as! WeatherNotification
         cell.configure(with: notification)
         return cell
     }
@@ -108,9 +100,8 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let notification = notificationArray[indexPath.row]
-        tableView.cellForRow(at: indexPath)?.isSelected = false
-        performSegue(withIdentifier: "toEdit", sender: notification)
+        //tableView.cellForRow(at: indexPath)?.isSelected = false
+        performSegue(withIdentifier: "toEdit", sender: nil)
     }
     
 }

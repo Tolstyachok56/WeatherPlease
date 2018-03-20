@@ -8,13 +8,23 @@
 import Foundation
 //import CoreData
 
-struct WeatherNotification {
+class WeatherNotification {
     
     var date: Date = Date()
     var isOn: Bool = true
     var repeatWeekdays: [Int] = []
     var vibration: Bool = true
     var soundLabel: String = "deskBell"
+    
+    init() {}
+    
+    init(date: Date, isOn: Bool, repeatWeekdays: [Int], vibration: Bool, soundLabel: String) {
+        self.date = date
+        self.isOn = isOn
+        self.repeatWeekdays = repeatWeekdays
+        self.vibration = vibration
+        self.soundLabel = soundLabel
+    }
 }
 
 extension WeatherNotification {

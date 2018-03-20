@@ -11,18 +11,19 @@ import UIKit
 
 class AddEditViewController: UIViewController {
     
-    //var fetchedResultsController = CoreDataManager.instance.fetchedResultsController(entityName: "Notification", keyForSort: "date")
-    
     var notification: WeatherNotification!
     var delegate: NotificationsViewController!
     var editMode: Bool!
     
     @IBOutlet weak var timePicker: UIDatePicker!
+    @IBOutlet weak var settingsTableView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTimePicker()
     }
+    
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
@@ -30,26 +31,28 @@ class AddEditViewController: UIViewController {
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         //TODO: - Save data
+        notification.date = timePicker.date
+        
         if !editMode {
             delegate.notificationArray.append(notification)
         }
+        
         delegate.notificationsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     private func configureTimePicker() {
         timePicker.date = (notification?.date)!
+        timePicker.addTarget(self, action: #selector(timePicked), for: .valueChanged)
         timePicker.setValuesForKeys(["textColor": UIColor.white, "highlightsToday": false])
+    }
+    
+    @objc private func timePicked(picker: UIDatePicker) {
+        if picker.isEqual(self.timePicker) {
+            print(picker.date)
+            notification.date = picker.date
+            print(notification.formattedTime)
+        }
     }
     
 }
@@ -100,8 +103,6 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    //MARK: - UITableViewDelegate
-    
-    
 }
+
 

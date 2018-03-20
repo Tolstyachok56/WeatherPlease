@@ -154,6 +154,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="2sX-52-7bp" id="zWk-Vw-bfa"/>
                         <outlet property="editButton" destination="dPi-QR-0Zf" id="l31-OY-Rty"/>
                         <outlet property="notificationsTableView" destination="HjQ-bP-8nl" id="2Tf-Dd-UPs"/>
                         <segue destination="VPN-l2-DtG" kind="show" identifier="toEdit" id="ml0-7I-1GY"/>
@@ -220,6 +221,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="settingsTableView" destination="4Pq-Ld-WLM" id="Xkn-ab-GKN"/>
                         <outlet property="timePicker" destination="a0p-2E-LQn" id="vPH-wx-UwG"/>
                     </connections>
                 </viewController>
