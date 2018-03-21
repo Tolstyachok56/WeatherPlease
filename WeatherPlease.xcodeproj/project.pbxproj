@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0408DBDA20625DE100502D06 /* WeekdaysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0408DBD920625DE100502D06 /* WeekdaysViewController.swift */; };
+		0408DBDC206290B000502D06 /* SoundsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0408DBDB206290B000502D06 /* SoundsViewController.swift */; };
 		0410CBA2201F343F00D86E29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410CBA1201F343F00D86E29 /* AppDelegate.swift */; };
 		0410CBA4201F343F00D86E29 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410CBA3201F343F00D86E29 /* HomeViewController.swift */; };
 		0410CBA7201F343F00D86E29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0410CBA5201F343F00D86E29 /* Main.storyboard */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0408DBD920625DE100502D06 /* WeekdaysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdaysViewController.swift; sourceTree = "<group>"; };
+		0408DBDB206290B000502D06 /* SoundsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundsViewController.swift; sourceTree = "<group>"; };
 		0410CB9E201F343F00D86E29 /* WeatherPlease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherPlease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0410CBA1201F343F00D86E29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0410CBA3201F343F00D86E29 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 				04F6894720220C46009A06DF /* NotificationsViewController.swift */,
 				04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */,
 				04CE49492028B4E9007941F7 /* AddEditViewController.swift */,
+				0408DBD920625DE100502D06 /* WeekdaysViewController.swift */,
+				0408DBDB206290B000502D06 /* SoundsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -298,11 +304,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				04CE493820285C88007941F7 /* CoreDataManager.swift in Sources */,
+				0408DBDA20625DE100502D06 /* WeekdaysViewController.swift in Sources */,
 				04F6894820220C46009A06DF /* NotificationsViewController.swift in Sources */,
 				0458CC2B201F4C12004A5BBF /* WeatherDataModel.swift in Sources */,
 				0410CBAA201F343F00D86E29 /* WeatherPlease.xcdatamodeld in Sources */,
 				04CE493D202867B9007941F7 /* NotificationTableViewCell.swift in Sources */,
 				04CE494A2028B4E9007941F7 /* AddEditViewController.swift in Sources */,
+				0408DBDC206290B000502D06 /* SoundsViewController.swift in Sources */,
 				0410CBA4201F343F00D86E29 /* HomeViewController.swift in Sources */,
 				0410CBA2201F343F00D86E29 /* AppDelegate.swift in Sources */,
 				04CE493B202861DF007941F7 /* WeatherNotification.swift in Sources */,

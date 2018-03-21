@@ -9,48 +9,25 @@
 import UIKit
 
 final class NotificationsViewController: UIViewController {
-
-    var notificationArray = [WeatherNotification(date: Date(), isOn: true, repeatWeekdays: [4,5,6], vibration: true, soundLabel: "deskBell"),
-                             WeatherNotification(date: Date(), isOn: false, repeatWeekdays: [1,2], vibration: false, soundLabel: "icyBell")]
+    
+    //MARK: - Variables
+    var notificationArray = [WeatherNotification(date: Date(), isOn: false, repeatWeekdays: [4,5,6], vibration: true, soundLabel: "deskBell"),
+                             WeatherNotification(date: Date(), isOn: true, repeatWeekdays: [1,2], vibration: false, soundLabel: "icyBell")]
     
     @IBOutlet weak var notificationsTableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
+    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? AddEditViewController {
-            destination.hidesBottomBarWhenPushed = true
-            
-            if segue.identifier == "toAdd" {
-                destination.navigationItem.title = "Add"
-                destination.editMode = false
-            } else if segue.identifier == "toEdit" {
-                destination.navigationItem.title = "Edit"
-                destination.editMode = true
-                
-            }
-            
-            if let notificationIndex = notificationsTableView.indexPathForSelectedRow?.row {
-                destination.notification = notificationArray[notificationIndex]
-            } else {
-                destination.notification = WeatherNotification()
-            }
-            
-            destination.delegate = self
-            
-            //TODO: - set/get data on/from add/edit view
-        }
+    @IBAction func editPressed(_ sender: UIBarButtonItem) {
+        switchEditMode()
     }
     
-    //MARK: - Action
-    
-    @IBAction func editPressed(_ sender: UIBarButtonItem) {
+    func switchEditMode() {
         notificationsTableView.isEditing = !notificationsTableView.isEditing
         
         if notificationsTableView.isEditing {
@@ -63,8 +40,32 @@ final class NotificationsViewController: UIViewController {
             notificationsTableView.allowsSelection = false
         }
     }
-    
 
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? AddEditViewController {
+            destination.hidesBottomBarWhenPushed = true
+            
+            if segue.identifier == "toAdd" {
+                destination.navigationItem.title = "Add"
+                destination.editMode = false
+            } else if segue.identifier == "toEdit" {
+                destination.navigationItem.title = "Edit"
+                destination.editMode = true
+            }
+            
+            if let notificationIndex = notificationsTableView.indexPathForSelectedRow?.row {
+                destination.notification = notificationArray[notificationIndex]
+            } else {
+                destination.notification = WeatherNotification()
+            }
+            
+            destination.weekDays = destination.notification.repeatWeekdays
+            destination.soundLabel = destination.notification.soundLabel
+            destination.vibrationSwitch.isOn = destination.notification.vibration
+            destination.delegate = self
+        }
+    }
 }
 
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -78,7 +79,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
         let notification = notificationArray[indexPath.row]
-        cell.configure(with: notification)
+        cell.configure(with: notification, forRowAt: indexPath)
         return cell
     }
     
@@ -100,7 +101,6 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //tableView.cellForRow(at: indexPath)?.isSelected = false
         performSegue(withIdentifier: "toEdit", sender: nil)
     }
     

@@ -6,9 +6,8 @@
 //  Copyright © 2018 Виктория Бадисова. All rights reserved.
 //
 import Foundation
-//import CoreData
 
-class WeatherNotification {
+final class WeatherNotification {
     
     var date: Date = Date()
     var isOn: Bool = true
@@ -36,8 +35,9 @@ extension WeatherNotification {
     
     var formattedWeekdays: String {
         var repeatWeekdays = ""
-        for item in self.repeatWeekdays {
-            repeatWeekdays += "\(item) "
+        let daysOfWeek = DateFormatter().weekdaySymbols
+        for item in self.repeatWeekdays.sorted() {
+            repeatWeekdays += "\(daysOfWeek![item-1]) "
         }
         return repeatWeekdays
     }

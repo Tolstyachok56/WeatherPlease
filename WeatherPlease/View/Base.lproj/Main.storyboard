@@ -223,11 +223,103 @@
                     <connections>
                         <outlet property="settingsTableView" destination="4Pq-Ld-WLM" id="Xkn-ab-GKN"/>
                         <outlet property="timePicker" destination="a0p-2E-LQn" id="vPH-wx-UwG"/>
+                        <segue destination="JXY-cm-cT8" kind="show" identifier="toWeekdays" id="3ed-6M-Pcf"/>
+                        <segue destination="SLn-ck-iT6" kind="show" identifier="toSounds" id="k4F-nG-QgS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F5A-cH-7vF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2080.8000000000002" y="747.9760119940031"/>
+        </scene>
+        <!--Sounds-->
+        <scene sceneID="jfV-7d-gHA">
+            <objects>
+                <viewController id="SLn-ck-iT6" userLabel="Sounds" customClass="SoundsViewController" customModule="WeatherPlease" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nHU-Qs-Kyx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="ZNc-SH-GEt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-Ih-YSr">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="SLn-ck-iT6" id="H38-h2-PhF"/>
+                                    <outlet property="delegate" destination="SLn-ck-iT6" id="I4e-bh-HXE"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DiM-Ih-YSr" firstAttribute="leading" secondItem="LU6-kR-7Y3" secondAttribute="leading" id="Qng-O5-ted"/>
+                            <constraint firstAttribute="bottom" secondItem="ZNc-SH-GEt" secondAttribute="bottom" id="TCn-fT-eyB"/>
+                            <constraint firstItem="ZNc-SH-GEt" firstAttribute="top" secondItem="nHU-Qs-Kyx" secondAttribute="top" id="iyL-3z-rzn"/>
+                            <constraint firstAttribute="bottom" secondItem="DiM-Ih-YSr" secondAttribute="bottom" id="kXU-52-Y0F"/>
+                            <constraint firstItem="ZNc-SH-GEt" firstAttribute="trailing" secondItem="LU6-kR-7Y3" secondAttribute="trailing" id="mXw-R4-QIz"/>
+                            <constraint firstItem="DiM-Ih-YSr" firstAttribute="trailing" secondItem="LU6-kR-7Y3" secondAttribute="trailing" id="rLM-i4-Jf6"/>
+                            <constraint firstItem="DiM-Ih-YSr" firstAttribute="top" secondItem="LU6-kR-7Y3" secondAttribute="top" id="sVS-Iv-Zmv"/>
+                            <constraint firstItem="ZNc-SH-GEt" firstAttribute="leading" secondItem="LU6-kR-7Y3" secondAttribute="leading" id="tGV-uK-Mld"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LU6-kR-7Y3"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ti4-LK-oSS">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="pnK-Jv-T6T">
+                            <connections>
+                                <action selector="donePressed:" destination="SLn-ck-iT6" id="JMN-BJ-qPy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xvD-Dt-vV1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3040.8000000000002" y="1154.5727136431785"/>
+        </scene>
+        <!--Weekdays-->
+        <scene sceneID="tk9-4G-CtU">
+            <objects>
+                <viewController id="JXY-cm-cT8" userLabel="Weekdays" customClass="WeekdaysViewController" customModule="WeatherPlease" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Lmu-FJ-wPE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="hre-p8-CXY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g0F-30-615">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="JXY-cm-cT8" id="DTf-U6-5PF"/>
+                                    <outlet property="delegate" destination="JXY-cm-cT8" id="jfN-a1-Ktl"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hre-p8-CXY" firstAttribute="top" secondItem="Lmu-FJ-wPE" secondAttribute="top" id="6Fb-fi-hdG"/>
+                            <constraint firstAttribute="bottom" secondItem="g0F-30-615" secondAttribute="bottom" id="9vL-r7-2dx"/>
+                            <constraint firstItem="hre-p8-CXY" firstAttribute="leading" secondItem="xEh-Ag-CgV" secondAttribute="leading" id="Ce6-Mf-fAN"/>
+                            <constraint firstItem="hre-p8-CXY" firstAttribute="trailing" secondItem="xEh-Ag-CgV" secondAttribute="trailing" id="NcU-CY-5oP"/>
+                            <constraint firstAttribute="bottom" secondItem="hre-p8-CXY" secondAttribute="bottom" id="ULs-rU-xM9"/>
+                            <constraint firstItem="g0F-30-615" firstAttribute="top" secondItem="xEh-Ag-CgV" secondAttribute="top" id="enu-0t-4lS"/>
+                            <constraint firstItem="g0F-30-615" firstAttribute="trailing" secondItem="xEh-Ag-CgV" secondAttribute="trailing" id="ngx-Fw-Dwd"/>
+                            <constraint firstItem="g0F-30-615" firstAttribute="leading" secondItem="xEh-Ag-CgV" secondAttribute="leading" id="wrR-DY-NdW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xEh-Ag-CgV"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GVZ-WO-ADr">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="56L-99-Fdj">
+                            <connections>
+                                <action selector="donePressed:" destination="JXY-cm-cT8" id="8eg-zj-has"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lXZ-GD-7PF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3041" y="412"/>
         </scene>
         <!--NavBar Notifications-->
         <scene sceneID="J36-6k-dKj">

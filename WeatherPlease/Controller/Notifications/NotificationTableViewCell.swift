@@ -10,6 +10,8 @@ import UIKit
 
 class NotificationTableViewCell: UITableViewCell {
     
+    let notificationSwitch = UISwitch()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -18,7 +20,7 @@ class NotificationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(with weatherNotification: WeatherNotification) {
+    func configure(with weatherNotification: WeatherNotification, forRowAt indexPath: IndexPath) {
         
         configureLabel(self.textLabel!,
                        text: weatherNotification.formattedTime,
@@ -30,15 +32,9 @@ class NotificationTableViewCell: UITableViewCell {
                        fontSize: 14)
         self.backgroundColor = .clear
         
-        let cellSwitch = UISwitch()
-        cellSwitch.isOn = weatherNotification.isOn
-        self.accessoryView = cellSwitch
-    }
-    
-    private func convertDateToTime(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm"
-        return formatter.string(from: date)
+        notificationSwitch.isOn = weatherNotification.isOn
+        notificationSwitch.tag = indexPath.row + 1
+        self.accessoryView = notificationSwitch
     }
     
     private func configureLabel(_ label: UILabel, text: String, color: UIColor, fontSize: CGFloat) {
