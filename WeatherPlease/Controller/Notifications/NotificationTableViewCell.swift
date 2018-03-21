@@ -11,6 +11,7 @@ import UIKit
 class NotificationTableViewCell: UITableViewCell {
     
     let notificationSwitch = UISwitch()
+    var notification: WeatherNotification!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,21 +21,27 @@ class NotificationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(with weatherNotification: WeatherNotification, forRowAt indexPath: IndexPath) {
+    func configure(with weatherNotification: WeatherNotification) {
+        
+        notification = weatherNotification
         
         configureLabel(self.textLabel!,
-                       text: weatherNotification.formattedTime,
+                       text: notification.formattedTime,
                        color: .white,
                        fontSize: 50)
         configureLabel(self.detailTextLabel!,
-                       text: weatherNotification.formattedWeekdays,
+                       text: notification.formattedWeekdays,
                        color: .white,
                        fontSize: 14)
         self.backgroundColor = .clear
         
-        notificationSwitch.isOn = weatherNotification.isOn
-        notificationSwitch.tag = indexPath.row + 1
+        notificationSwitch.isOn = notification.isOn
+        notificationSwitch.addTarget(self, action: #selector(onOffSwitch), for: .valueChanged)
         self.accessoryView = notificationSwitch
+    }
+    
+    @objc func onOffSwitch() {
+        notification.isOn = !notification.isOn
     }
     
     private func configureLabel(_ label: UILabel, text: String, color: UIColor, fontSize: CGFloat) {

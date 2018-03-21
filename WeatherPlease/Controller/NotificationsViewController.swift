@@ -79,7 +79,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
         let notification = notificationArray[indexPath.row]
-        cell.configure(with: notification, forRowAt: indexPath)
+        cell.configure(with: notification)
         return cell
     }
     
