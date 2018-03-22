@@ -190,6 +190,7 @@
                                 <date key="date" timeIntervalSinceReferenceDate="539609816.92215097">
                                     <!--2018-02-06 11:36:56 +0000-->
                                 </date>
+                                <locale key="locale" localeIdentifier="en_GB"/>
                             </datePicker>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

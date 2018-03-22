@@ -29,7 +29,7 @@ final class WeatherNotification {
 extension WeatherNotification {
     var formattedTime: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm"
+        formatter.dateFormat = "HH:mm"
         return formatter.string(from: self.date)
     }
     
