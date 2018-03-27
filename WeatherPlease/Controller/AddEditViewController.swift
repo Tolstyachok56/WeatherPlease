@@ -28,11 +28,11 @@ final class AddEditViewController: UIViewController {
         notificationModel = WeatherNotifications()
         settingsTableView.reloadData()
         vibrationIsOn = segueInfo.vibration
-        configureTimePicker()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureTimePicker()
     }
     
     
