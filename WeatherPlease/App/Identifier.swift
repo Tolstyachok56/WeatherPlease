@@ -13,6 +13,7 @@ struct Id {
     static let repeatReuseID = "repeatCell"
     static let soundReuseID = "soundCell"
     static let vibrationReuseID = "vibrationCell"
+    static let deleteReuseID = "deleteCell"
     
     static let addSegueID = "toAdd"
     static let editSegueID = "toEdit"

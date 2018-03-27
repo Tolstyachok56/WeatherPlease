@@ -22,21 +22,16 @@ final class NotificationTableViewCell: UITableViewCell {
         let weatherNotificationsModel = WeatherNotifications()
         let notification = weatherNotificationsModel.notifications[row]
         
-        configureLabel(self.textLabel!,
-                       text: notification.formattedTime,
-                       color: .white,
-                       fontSize: 50)
-        configureLabel(self.detailTextLabel!,
-                       text: WeekdaysViewController.repeatLabel(weekdays: notification.repeatWeekdays),
-                       color: .white,
-                       fontSize: 14)
-        self.backgroundColor = .clear
+        configureLabel(self.textLabel!, text: notification.formattedTime, color: .white, fontSize: 50)
+        configureLabel(self.detailTextLabel!, text: WeekdaysViewController.repeatLabel(weekdays: notification.repeatWeekdays), color: .white, fontSize: 14)
         
         let notificationSwitch = UISwitch(frame: CGRect())
         notificationSwitch.tag = row
         notificationSwitch.isOn = notification.isOn
         notificationSwitch.addTarget(self, action: #selector(onOffSwitchPressed(_:)), for: .valueChanged)
         self.accessoryView = notificationSwitch
+        
+        self.backgroundColor = .clear
     }
     
     @objc private func onOffSwitchPressed(_ sender: UISwitch) {

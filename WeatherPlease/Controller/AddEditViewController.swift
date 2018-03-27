@@ -24,11 +24,11 @@ final class AddEditViewController: UIViewController {
     //MARK: - Methods
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         notificationModel = WeatherNotifications()
         settingsTableView.reloadData()
         vibrationIsOn = segueInfo.vibration
         configureTimePicker()
-        super.viewWillAppear(animated)
     }
     
     override func viewDidLoad() {
@@ -99,7 +99,11 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if segueInfo.editMode {
+            return 4
+        } else {
             return 3
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,6 +129,10 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
                 vibrationSwitch.setOn(true, animated: false)
             }
             cell.accessoryView = vibrationSwitch
+        case 3:
+            cell = UITableViewCell(style: .default, reuseIdentifier: Id.deleteReuseID)
+            cell.textLabel?.text = "Delete"
+            cell.textLabel?.textAlignment = .center
         default:
             break
         }
@@ -143,6 +151,11 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
             performSegue(withIdentifier: Id.weekdaysSegueID, sender: nil)
         case 1:
             performSegue(withIdentifier: Id.soundSegueID, sender: nil)
+        case 3:
+            notificationModel.notifications.remove(at: segueInfo.currentCellIndex)
+            delegate.switchEditMode()
+            delegate.notificationsTableView.reloadData()
+            self.navigationController?.popViewController(animated: true)
         default:
             break
         }

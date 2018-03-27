@@ -66,7 +66,6 @@ final class NotificationsViewController: UIViewController {
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfRows = notificationModel.count
         if numberOfRows == 0 {
@@ -83,16 +82,6 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         return cell
     }
     
-    //MARK: - UITableViewDelegate
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90.0
-    }
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .delete
-    }
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let index = indexPath.row
@@ -105,6 +94,15 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
             notificationModel.notifications.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+    }
+    
+    //MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90.0
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
