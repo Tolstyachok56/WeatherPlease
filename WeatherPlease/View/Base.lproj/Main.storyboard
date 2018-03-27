@@ -265,7 +265,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LU6-kR-7Y3"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ti4-LK-oSS">
+                    <navigationItem key="navigationItem" title="Sound" id="ti4-LK-oSS">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="pnK-Jv-T6T">
                             <connections>
                                 <action selector="donePressed:" destination="SLn-ck-iT6" id="JMN-BJ-qPy"/>
@@ -310,7 +310,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xEh-Ag-CgV"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GVZ-WO-ADr">
+                    <navigationItem key="navigationItem" title="Repeat" id="GVZ-WO-ADr">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="56L-99-Fdj">
                             <connections>
                                 <action selector="donePressed:" destination="JXY-cm-cT8" id="8eg-zj-has"/>

@@ -24,10 +24,11 @@ final class WeekdaysViewController: UIViewController {
     }
 
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
-        delegate.weekDays = repeatWeekdays
+        delegate.segueInfo.repeatWeekdays = repeatWeekdays
         delegate.settingsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
     }
+    
 }
 
 extension WeekdaysViewController: UITableViewDataSource, UITableViewDelegate {
@@ -68,4 +69,45 @@ extension WeekdaysViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
+}
+
+extension WeekdaysViewController {
+    
+    //MARK: - Static methods
+    static func repeatLabel(weekdays: [Int]) -> String {
+        if weekdays.count == 7 {
+            return "Every day"
+        }
+        
+        if weekdays.isEmpty {
+            return "Never"
+        }
+        
+        var ret = String()
+        var weekdaysSorted:[Int] = [Int]()
+        
+        weekdaysSorted = weekdays.sorted(by: <)
+        
+        for day in weekdaysSorted {
+            switch day{
+            case 1:
+                ret += "Sun "
+            case 2:
+                ret += "Mon "
+            case 3:
+                ret += "Tue "
+            case 4:
+                ret += "Wed "
+            case 5:
+                ret += "Thu "
+            case 6:
+                ret += "Fri "
+            case 7:
+                ret += "Sat "
+            default:
+                break
+            }
+        }
+        return ret
+    }
 }

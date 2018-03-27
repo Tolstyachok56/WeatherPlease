@@ -11,8 +11,7 @@ import UIKit
 final class NotificationsViewController: UIViewController {
     
     //MARK: - Variables
-    var notificationArray = [WeatherNotification(date: Date(), isOn: false, repeatWeekdays: [4,5,6], vibration: true, soundLabel: "deskBell"),
-                             WeatherNotification(date: Date(), isOn: true, repeatWeekdays: [1,2], vibration: false, soundLabel: "icyBell")]
+    var notificationModel: WeatherNotifications = WeatherNotifications()
     
     @IBOutlet weak var notificationsTableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
@@ -21,6 +20,12 @@ final class NotificationsViewController: UIViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        notificationModel = WeatherNotifications()
+        notificationsTableView.reloadData()
     }
     
     @IBAction func editPressed(_ sender: UIBarButtonItem) {
@@ -46,23 +51,13 @@ final class NotificationsViewController: UIViewController {
         if let destination = segue.destination as? AddEditViewController {
             destination.hidesBottomBarWhenPushed = true
             
-            if segue.identifier == "toAdd" {
+            if segue.identifier == Id.addSegueID {
                 destination.navigationItem.title = "Add"
-                destination.editMode = false
-            } else if segue.identifier == "toEdit" {
+                destination.segueInfo = SegueInfo(currentCellIndex: notificationModel.count, editMode: false, isOn: true, repeatWeekdays: [], soundLabel: "deskBell", vibration: true)
+            } else if segue.identifier == Id.editSegueID {
                 destination.navigationItem.title = "Edit"
-                destination.editMode = true
+                destination.segueInfo = sender as! SegueInfo
             }
-            
-            if let notificationIndex = notificationsTableView.indexPathForSelectedRow?.row {
-                destination.notification = notificationArray[notificationIndex]
-            } else {
-                destination.notification = WeatherNotification()
-            }
-            
-            destination.weekDays = destination.notification.repeatWeekdays
-            destination.soundLabel = destination.notification.soundLabel
-            destination.vibrationSwitch.isOn = destination.notification.vibration
             destination.delegate = self
         }
     }
@@ -73,13 +68,18 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     //MARK: - UITableViewDataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notificationArray.count
+        let numberOfRows = notificationModel.count
+        if numberOfRows == 0 {
+            tableView.separatorStyle = .none
+        } else {
+            tableView.separatorStyle = .singleLine
+        }
+        return numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: "notificationCell")
-        let notification = notificationArray[indexPath.row]
-        cell.configure(with: notification)
+        let cell = NotificationTableViewCell(style: .subtitle, reuseIdentifier: Id.notificationCellID)
+        cell.configure(row: indexPath.row)
         return cell
     }
     
@@ -95,13 +95,22 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            notificationArray.remove(at: indexPath.row)
+            let index = indexPath.row
+            for cell in tableView.visibleCells {
+                let sw = cell.accessoryView as! UISwitch
+                if sw.tag > index {
+                    sw.tag -= 1
+                }
+            }
+            notificationModel.notifications.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toEdit", sender: nil)
+        let index = indexPath.row
+        let currentNotification = notificationModel.notifications[index]
+        performSegue(withIdentifier: Id.editSegueID, sender: SegueInfo(currentCellIndex: index, editMode: true, isOn: currentNotification.isOn, repeatWeekdays: currentNotification.repeatWeekdays, soundLabel: currentNotification.soundLabel, vibration: currentNotification.vibration))
     }
     
 }

@@ -7,32 +7,15 @@
 //
 
 import UIKit
-import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        // White and notHidden status bar
-        UIApplication.shared.isStatusBarHidden = false
-        UIApplication.shared.statusBarStyle = .lightContent
         
-        // Transparent navigation bar
-        let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.setBackgroundImage(UIImage(), for: .default)
-        navigationBarAppearance.shadowImage = UIImage()
-        navigationBarAppearance.isTranslucent = true
-        
-        
-        //Transparent tab bar
-        let tabBarAppearance = UITabBar.appearance()
-        tabBarAppearance.backgroundImage = UIImage()
-        tabBarAppearance.shadowImage = UIImage()
-        tabBarAppearance.isTranslucent = true
+        appDesign()
         
         return true
     }
@@ -58,10 +41,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        CoreDataManager.instance.saveContext()
     }
 
-  
+    fileprivate func appDesign() {
+        // White and notHidden status bar
+        UIApplication.shared.isStatusBarHidden = false
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        // Transparent navigation bar
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.setBackgroundImage(UIImage(), for: .default)
+        navigationBarAppearance.shadowImage = UIImage()
+        navigationBarAppearance.isTranslucent = true
+        
+        //Transparent tab bar
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.backgroundImage = UIImage()
+        tabBarAppearance.shadowImage = UIImage()
+        tabBarAppearance.isTranslucent = true
+    }
 
 }
 

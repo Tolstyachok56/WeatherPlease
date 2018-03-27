@@ -26,7 +26,7 @@ class SoundsViewController: UIViewController {
     }
     
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
-        delegate.soundLabel = soundLabel
+        delegate.segueInfo.soundLabel = soundLabel
         delegate.settingsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
     }
