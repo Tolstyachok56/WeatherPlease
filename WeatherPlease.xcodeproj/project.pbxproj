@@ -18,6 +18,7 @@
 		04309B8520650CD800201E62 /* Persistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04309B8420650CD800201E62 /* Persistent.swift */; };
 		04309B87206A65C000201E62 /* SegueInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04309B86206A65C000201E62 /* SegueInfo.swift */; };
 		04309B89206A6FE500201E62 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04309B88206A6FE500201E62 /* Identifier.swift */; };
+		04309BAC206BD85900201E62 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04309BAB206BD85800201E62 /* Scheduler.swift */; };
 		0458CC2B201F4C12004A5BBF /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458CC2A201F4C12004A5BBF /* WeatherDataModel.swift */; };
 		04CE493B202861DF007941F7 /* WeatherNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE493A202861DF007941F7 /* WeatherNotificationModel.swift */; };
 		04CE493D202867B9007941F7 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */; };
@@ -43,6 +44,7 @@
 		04309B8420650CD800201E62 /* Persistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistent.swift; sourceTree = "<group>"; };
 		04309B86206A65C000201E62 /* SegueInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueInfo.swift; sourceTree = "<group>"; };
 		04309B88206A6FE500201E62 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
+		04309BAB206BD85800201E62 /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 		0458CC2A201F4C12004A5BBF /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
 		04CE493A202861DF007941F7 /* WeatherNotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNotificationModel.swift; sourceTree = "<group>"; };
 		04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = WeatherPlease/Controller/Notifications/NotificationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -90,13 +92,13 @@
 			isa = PBXGroup;
 			children = (
 				0410CBAB201F343F00D86E29 /* Assets.xcassets */,
-				04CE494020286EFA007941F7 /* SoundAssets */,
-				0410CBB0201F343F00D86E29 /* Info.plist */,
+				04CE494020286EFA007941F7 /* Sounds */,
 				04CE493920285DA3007941F7 /* App */,
 				0458CC27201F4B24004A5BBF /* Controller */,
 				0458CC29201F4BAD004A5BBF /* Model */,
 				04309B7F2064FF7C00201E62 /* Protocol */,
 				0458CC28201F4B57004A5BBF /* View */,
+				0410CBB0201F343F00D86E29 /* Info.plist */,
 			);
 			path = WeatherPlease;
 			sourceTree = "<group>";
@@ -147,18 +149,19 @@
 			children = (
 				0410CBA1201F343F00D86E29 /* AppDelegate.swift */,
 				04309B88206A6FE500201E62 /* Identifier.swift */,
+				04309BAB206BD85800201E62 /* Scheduler.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
 		};
-		04CE494020286EFA007941F7 /* SoundAssets */ = {
+		04CE494020286EFA007941F7 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
 				04CE494120286F1C007941F7 /* deskBell.mp3 */,
 				04CE494320286F34007941F7 /* icyBell.mp3 */,
 				04CE494520286F4D007941F7 /* slightBell.mp3 */,
 			);
-			path = SoundAssets;
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		1D8E3FA9D176735DB4A8CFE0 /* Pods */ = {
@@ -216,7 +219,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -318,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0408DBDA20625DE100502D06 /* WeekdaysViewController.swift in Sources */,
+				04309BAC206BD85900201E62 /* Scheduler.swift in Sources */,
 				04F6894820220C46009A06DF /* NotificationsViewController.swift in Sources */,
 				04309B832065001A00201E62 /* PropertyReflectable.swift in Sources */,
 				04309B89206A6FE500201E62 /* Identifier.swift in Sources */,

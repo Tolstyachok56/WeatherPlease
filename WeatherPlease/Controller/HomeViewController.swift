@@ -65,6 +65,7 @@ final class HomeViewController: UIViewController {
             weatherDataModel.temperature = Int(temperatureResult - 273.15)
             weatherDataModel.locationName = json["name"].stringValue
             weatherDataModel.condition = json["weather"][0]["id"].intValue
+            weatherDataModel.description = json["weather"][0]["description"].stringValue
             weatherDataModel.windSpeed = json["wind"]["speed"].intValue
             weatherDataModel.weatherImageName = weatherDataModel.getWeatherImage(forConditionID: weatherDataModel.condition)
             updateUIWithWeatherData()

@@ -45,7 +45,7 @@ struct WeatherNotification: PropertyReflectable {
 
 class WeatherNotifications: Persistent {
     var ud: UserDefaults = UserDefaults.standard
-    var persistentKey: String = "weatherNotifications"
+    var persistentKey: String = "WeatherPleaseNotifications"
     var notifications: [WeatherNotification] = [] {
         didSet {
             persist()

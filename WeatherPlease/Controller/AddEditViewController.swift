@@ -12,14 +12,13 @@ final class AddEditViewController: UIViewController {
     
     //MARK: - Variables
     var delegate: NotificationsViewController!
-
-    @IBOutlet weak var timePicker: UIDatePicker!
-    @IBOutlet weak var settingsTableView: UITableView!
-    
+    let scheduler = Scheluler()
     var notificationModel: WeatherNotifications = WeatherNotifications()
     var segueInfo: SegueInfo!
     var vibrationIsOn: Bool = true
-    var isOn: Bool!
+    
+    @IBOutlet weak var timePicker: UIDatePicker!
+    @IBOutlet weak var settingsTableView: UITableView!
     
     //MARK: - Methods
     
@@ -43,9 +42,12 @@ final class AddEditViewController: UIViewController {
             timePicker.date = Date()
         }
         timePicker.setValuesForKeys(["textColor": UIColor.white, "highlightsToday": false])
+        timePicker.addTarget(self, action: #selector(changePickerValue), for: .valueChanged)
     }
     
-    
+    @objc func changePickerValue(sender: UIDatePicker) {
+        print(sender.date)
+    }
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         if segueInfo.editMode { delegate.switchEditMode() }
         self.navigationController?.popViewController(animated: true)
@@ -54,7 +56,7 @@ final class AddEditViewController: UIViewController {
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         
         var tempNotification = WeatherNotification()
-        
+
         tempNotification.date = timePicker.date
         tempNotification.repeatWeekdays = segueInfo.repeatWeekdays
         tempNotification.soundLabel = segueInfo.soundLabel
@@ -66,6 +68,7 @@ final class AddEditViewController: UIViewController {
         } else {
             notificationModel.notifications.append(tempNotification)
         }
+        scheduler.reSchedule()
         delegate.notificationsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
     }
@@ -153,6 +156,7 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
             performSegue(withIdentifier: Id.soundSegueID, sender: nil)
         case 3:
             notificationModel.notifications.remove(at: segueInfo.currentCellIndex)
+            scheduler.reSchedule()
             delegate.switchEditMode()
             delegate.notificationsTableView.reloadData()
             self.navigationController?.popViewController(animated: true)

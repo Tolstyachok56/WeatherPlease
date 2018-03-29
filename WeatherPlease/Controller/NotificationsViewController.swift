@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import UserNotifications
 
 final class NotificationsViewController: UIViewController {
     
     //MARK: - Variables
     var notificationModel: WeatherNotifications = WeatherNotifications()
+    let scheduler = Scheluler()
     
     @IBOutlet weak var notificationsTableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
@@ -20,6 +22,7 @@ final class NotificationsViewController: UIViewController {
     //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        scheduler.registerLocalNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,6 +95,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
                 }
             }
             notificationModel.notifications.remove(at: indexPath.row)
+            scheduler.reSchedule()
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }

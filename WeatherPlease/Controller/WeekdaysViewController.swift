@@ -78,9 +78,8 @@ extension WeekdaysViewController {
         if weekdays.count == 7 {
             return "Every day"
         }
-        
         if weekdays.isEmpty {
-            return "Never"
+            return ""
         }
         
         var ret = String()

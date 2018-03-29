@@ -8,13 +8,14 @@
 
 final class WeatherDataModel {
     
-    internal var temperature: Int = 0
-    internal var windSpeed: Int = 0
-    internal var condition: Int = 0
-    internal var locationName: String = ""
-    internal var weatherImageName: String = "unknown"
+    var temperature: Int = 0
+    var windSpeed: Int = 0
+    var condition: Int = 0
+    var description: String = ""
+    var locationName: String = ""
+    var weatherImageName: String = "unknown"
     
-    internal func getWeatherImage(forConditionID id: Int) -> String {
+    func getWeatherImage(forConditionID id: Int) -> String {
         switch id {
         case 200...232:
             return "storm"

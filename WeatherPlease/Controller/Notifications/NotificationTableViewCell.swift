@@ -37,6 +37,8 @@ final class NotificationTableViewCell: UITableViewCell {
     @objc private func onOffSwitchPressed(_ sender: UISwitch) {
         let weatherNotificationsModel = WeatherNotifications()
         weatherNotificationsModel.notifications[sender.tag].isOn = sender.isOn
+        let scheduler = Scheluler()
+        scheduler.reSchedule()
     }
     
     private func configureLabel(_ label: UILabel, text: String, color: UIColor, fontSize: CGFloat) {

@@ -12,7 +12,6 @@ class SoundsViewController: UIViewController {
     
     //MARK: - Variables
     let soundArray = ["deskBell", "icyBell", "slightBell"]
-    
     var soundLabel: String!
     var delegate: AddEditViewController!
 
