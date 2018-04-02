@@ -55,7 +55,7 @@ final class NotificationsViewController: UIViewController {
             
             if segue.identifier == Id.addSegueID {
                 destination.navigationItem.title = "Add"
-                destination.segueInfo = SegueInfo(currentCellIndex: notificationModel.count, editMode: false, isOn: true, repeatWeekdays: [], soundLabel: "deskBell", vibration: true)
+                destination.segueInfo = SegueInfo(currentCellIndex: notificationModel.count, editMode: false, isOn: true, repeatWeekdays: [], soundLabel: "deskBell")
             } else if segue.identifier == Id.editSegueID {
                 destination.navigationItem.title = "Edit"
                 destination.segueInfo = sender as! SegueInfo
@@ -111,7 +111,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
         let currentNotification = notificationModel.notifications[index]
-        performSegue(withIdentifier: Id.editSegueID, sender: SegueInfo(currentCellIndex: index, editMode: true, isOn: currentNotification.isOn, repeatWeekdays: currentNotification.repeatWeekdays, soundLabel: currentNotification.soundLabel, vibration: currentNotification.vibration))
+        performSegue(withIdentifier: Id.editSegueID, sender: SegueInfo(currentCellIndex: index, editMode: true, isOn: currentNotification.isOn, repeatWeekdays: currentNotification.repeatWeekdays, soundLabel: currentNotification.soundLabel))
     }
     
 }

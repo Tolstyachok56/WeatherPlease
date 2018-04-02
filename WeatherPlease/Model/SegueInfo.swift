@@ -14,5 +14,4 @@ struct SegueInfo {
     var isOn: Bool
     var repeatWeekdays: [Int]
     var soundLabel: String
-    var vibration: Bool
 }

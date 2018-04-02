@@ -15,7 +15,6 @@ final class AddEditViewController: UIViewController {
     let scheduler = Scheluler()
     var notificationModel: WeatherNotifications = WeatherNotifications()
     var segueInfo: SegueInfo!
-    var vibrationIsOn: Bool = true
     
     @IBOutlet weak var timePicker: UIDatePicker!
     @IBOutlet weak var settingsTableView: UITableView!
@@ -26,7 +25,6 @@ final class AddEditViewController: UIViewController {
         super.viewWillAppear(animated)
         notificationModel = WeatherNotifications()
         settingsTableView.reloadData()
-        vibrationIsOn = segueInfo.vibration
     }
     
     override func viewDidLoad() {
@@ -60,7 +58,6 @@ final class AddEditViewController: UIViewController {
         tempNotification.date = timePicker.date
         tempNotification.repeatWeekdays = segueInfo.repeatWeekdays
         tempNotification.soundLabel = segueInfo.soundLabel
-        tempNotification.vibration = vibrationIsOn
         
         if segueInfo.editMode {
             notificationModel.notifications[segueInfo.currentCellIndex] = tempNotification
@@ -71,10 +68,6 @@ final class AddEditViewController: UIViewController {
         scheduler.reSchedule()
         delegate.notificationsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func vibrationSwitchPressed(_ sender: UISwitch) {
-        vibrationIsOn = sender.isOn
     }
     
     
@@ -103,9 +96,9 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segueInfo.editMode {
-            return 4
-        } else {
             return 3
+        } else {
+            return 2
         }
     }
     
@@ -124,15 +117,6 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
             cell.detailTextLabel?.text = segueInfo.soundLabel
             cell.accessoryType = .disclosureIndicator
         case 2:
-            cell = UITableViewCell(style: .default, reuseIdentifier: Id.vibrationReuseID)
-            cell.textLabel?.text = "Vibration"
-            let vibrationSwitch = UISwitch(frame: CGRect())
-            vibrationSwitch.addTarget(self, action: #selector(vibrationSwitchPressed(_:)), for: .valueChanged)
-            if vibrationIsOn {
-                vibrationSwitch.setOn(true, animated: false)
-            }
-            cell.accessoryView = vibrationSwitch
-        case 3:
             cell = UITableViewCell(style: .default, reuseIdentifier: Id.deleteReuseID)
             cell.textLabel?.text = "Delete"
             cell.textLabel?.textAlignment = .center
@@ -154,7 +138,7 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
             performSegue(withIdentifier: Id.weekdaysSegueID, sender: nil)
         case 1:
             performSegue(withIdentifier: Id.soundSegueID, sender: nil)
-        case 3:
+        case 2:
             notificationModel.notifications.remove(at: segueInfo.currentCellIndex)
             scheduler.reSchedule()
             delegate.switchEditMode()

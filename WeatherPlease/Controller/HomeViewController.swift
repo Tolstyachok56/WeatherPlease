@@ -8,19 +8,15 @@
 
 import UIKit
 import CoreLocation
-import Alamofire
-import SwiftyJSON
 
 final class HomeViewController: UIViewController {
     
     //MARK: - Variables
-    
-    private let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather/"
-    private let APP_ID = "6f3162859065dbac6ceb0d7e8ff4fb98"
-    
     private let locationManager = CLLocationManager()
-    private let weatherDataModel = WeatherDataModel()
+    var weatherService = WeatherService()
     
+    let weatherDataModel = WeatherDataModel()
+
     // weather ui
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
@@ -29,54 +25,20 @@ final class HomeViewController: UIViewController {
     
     // refresh button
     @IBOutlet weak var refreshButton: UIButton!
-    private var rotateTimer = Timer()
+    var rotateTimer = Timer()
     private var rotateDegree = CGFloat.pi/3
     
     //MARK: - VC Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        weatherService.delegate = self
         setLocationManager()
-    }
-    
-    //MARK: - Networking
-    
-    private func getWeatherData(fromURL url: String, withParameters parameters: [String: String]) {
-        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { (response) in
-            if response.result.isSuccess {
-                print("Success. Got the weather data")
-                self.rotateTimer.invalidate()
-                let weatherJSON: JSON = JSON(response.result.value!)
-                self.updateWeatherData(json: weatherJSON)
-            } else {
-                print("Error: \(response.result.error!)")
-                self.rotateTimer.invalidate()
-                self.locationLabel.text = "Connection issues"
-                self.temperatureLabel.text = "--ºC"
-                self.windLabel.text = "--m/s"
-            }
-        }
-    }
-    
-    //MARK: - JSON parsing
-    
-    private func updateWeatherData(json: JSON) {
-        if let temperatureResult = json["main"]["temp"].double {
-            weatherDataModel.temperature = Int(temperatureResult - 273.15)
-            weatherDataModel.locationName = json["name"].stringValue
-            weatherDataModel.condition = json["weather"][0]["id"].intValue
-            weatherDataModel.description = json["weather"][0]["description"].stringValue
-            weatherDataModel.windSpeed = json["wind"]["speed"].intValue
-            weatherDataModel.weatherImageName = weatherDataModel.getWeatherImage(forConditionID: weatherDataModel.condition)
-            updateUIWithWeatherData()
-        } else {
-            locationLabel.text = "Weather unavailable"
-        }
     }
     
     //MARK: - Update UI
     
-    private func updateUIWithWeatherData() {
+    func updateUIWithWeatherData() {
         locationLabel.text = weatherDataModel.locationName
         weatherImage.image = UIImage(named: weatherDataModel.weatherImageName)
         temperatureLabel.text = "\(weatherDataModel.temperature) ºC"
@@ -90,7 +52,7 @@ final class HomeViewController: UIViewController {
         locationManager.startUpdatingLocation()
     }
     
-    @objc private func rotateRefreshButton() {
+    @objc func rotateRefreshButton() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.refreshButton.transform = CGAffineTransform(rotationAngle: self.rotateDegree)
         }) { (finished) in
@@ -118,10 +80,8 @@ extension HomeViewController: CLLocationManagerDelegate {
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
             print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
-            let requestParams: [String : String] = ["lat": String(location.coordinate.latitude),
-                                                      "lon": String(location.coordinate.longitude),
-                                                      "appid": APP_ID]
-            getWeatherData(fromURL: WEATHER_URL, withParameters: requestParams)
+            weatherService.getWeather(latitude: String(location.coordinate.latitude),
+                                      longitude: String(location.coordinate.longitude))
         }
     }
     
