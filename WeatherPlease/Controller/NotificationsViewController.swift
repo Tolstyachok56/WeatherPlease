@@ -12,7 +12,7 @@ final class NotificationsViewController: UIViewController {
     
     //MARK: - Variables
     var notificationModel: WeatherNotifications = WeatherNotifications()
-    let scheduler = Scheluler()
+    let scheduler = Scheduler()
     
     @IBOutlet weak var notificationsTableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!

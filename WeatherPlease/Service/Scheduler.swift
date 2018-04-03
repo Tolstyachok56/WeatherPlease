@@ -9,7 +9,7 @@
 import Foundation
 import UserNotifications
 
-final class Scheluler {
+final class Scheduler {
     
     var notificationsModel: WeatherNotifications = WeatherNotifications()
     

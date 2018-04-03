@@ -26,7 +26,6 @@ class WeatherService {
                 print("Success. Got the weather data")
                 self.delegate.rotateTimer.invalidate()
                 let weatherJSON: JSON = JSON(response.result.value!)
-                print(weatherJSON)
                 self.updateWeatherData(json: weatherJSON)
             } else {
                 print("Error: \(response.result.error!)")

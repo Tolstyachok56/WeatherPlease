@@ -12,7 +12,7 @@ final class AddEditViewController: UIViewController {
     
     //MARK: - Variables
     var delegate: NotificationsViewController!
-    let scheduler = Scheluler()
+    let scheduler = Scheduler()
     var notificationModel: WeatherNotifications = WeatherNotifications()
     var segueInfo: SegueInfo!
     
@@ -64,6 +64,8 @@ final class AddEditViewController: UIViewController {
             delegate.switchEditMode()
         } else {
             notificationModel.notifications.append(tempNotification)
+            print(notificationModel.notifications)
+            print(WeatherNotifications().notifications)
         }
         scheduler.reSchedule()
         delegate.notificationsTableView.reloadData()

@@ -37,7 +37,7 @@ final class NotificationTableViewCell: UITableViewCell {
     @objc private func onOffSwitchPressed(_ sender: UISwitch) {
         let weatherNotificationsModel = WeatherNotifications()
         weatherNotificationsModel.notifications[sender.tag].isOn = sender.isOn
-        let scheduler = Scheluler()
+        let scheduler = Scheduler()
         scheduler.reSchedule()
     }
     

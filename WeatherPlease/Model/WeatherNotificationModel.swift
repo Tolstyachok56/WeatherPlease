@@ -14,7 +14,7 @@ struct WeatherNotification: PropertyReflectable {
     var repeatWeekdays: [Int] = []
     var soundLabel: String = "deskBell"
     
-    static var propertyCount: Int = 5
+    static var propertyCount: Int = 4
 
     var formattedTime: String {
         let formatter = DateFormatter()
