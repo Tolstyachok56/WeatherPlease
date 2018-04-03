@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDesign()
         UNUserNotificationCenter.current().delegate = self
-        
         return true
     }
 
@@ -64,7 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
-
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     

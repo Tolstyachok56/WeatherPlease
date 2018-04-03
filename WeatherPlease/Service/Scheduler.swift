@@ -17,7 +17,7 @@ final class Scheluler {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
-                print(error?.localizedDescription)
+                print(String(describing: error?.localizedDescription))
             }
             if granted {
                 print("Notifications allowed")
@@ -78,10 +78,9 @@ final class Scheluler {
         let nowHour = calendar.component(.hour, from: now)
         let nowMinute = calendar.component(.minute, from: now)
         
-        let nextDay = now.addingTimeInterval(60*60*24)
-        
         var dateComponents = DateComponents()
         if (dateHour < nowHour) || (dateHour == nowHour && dateMinute < nowMinute) {
+            let nextDay = now.addingTimeInterval(60*60*24)
             dateComponents.year = calendar.component(.year, from: nextDay)
             dateComponents.month = calendar.component(.month, from: nextDay)
             dateComponents.day = calendar.component(.day, from: nextDay)
