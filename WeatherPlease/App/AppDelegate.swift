@@ -32,6 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        if let rootVC = window?.rootViewController as? UITabBarController {
+            rootVC.selectedIndex = 0
+            if let homeVC = rootVC.selectedViewController as? HomeViewController {
+                homeVC.refresh(homeVC.refreshButton)
+            }
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -68,4 +74,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .sound])
     }
+    
 }

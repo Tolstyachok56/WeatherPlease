@@ -34,6 +34,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         weatherService.delegate = self
         setLocationManager()
+        
     }
     
     //MARK: - Update UI
