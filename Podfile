@@ -9,5 +9,6 @@ target 'WeatherPlease' do
 
 pod 'SwiftyJSON'
 pod 'Alamofire'
+pod "SwipeableTabBarController"
 
 end

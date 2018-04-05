@@ -108,6 +108,11 @@ final class Scheduler {
         }
     }
     
+    func deSchedule() {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        print("Removed all delivered notifications")
+    }
+    
     private func syncNotificationsModel()  {
         notificationsModel = WeatherNotifications()
     }
