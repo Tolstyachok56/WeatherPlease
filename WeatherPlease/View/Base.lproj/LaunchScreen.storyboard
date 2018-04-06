@@ -21,13 +21,31 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="5ym-NR-NUY">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="PoE-3n-uvp">
+                                <rect key="frame" x="60" y="185" width="255" height="297"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloudy3" translatesAutoresizingMaskIntoConstraints="NO" id="Jle-az-ECp">
+                                        <rect key="frame" x="0.0" y="0.0" width="255" height="256"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather Please" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5l-8a-sXG">
+                                        <rect key="frame" x="10.5" y="256" width="234.5" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="34"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="5ym-NR-NUY" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2bV-X2-n6w"/>
                             <constraint firstItem="5ym-NR-NUY" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="ADX-gO-nFi"/>
+                            <constraint firstAttribute="trailing" secondItem="PoE-3n-uvp" secondAttribute="trailing" constant="60" id="G71-Xj-MnE"/>
+                            <constraint firstItem="PoE-3n-uvp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="HS4-bl-u22"/>
+                            <constraint firstItem="PoE-3n-uvp" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="60" id="Ny9-Mo-dWS"/>
                             <constraint firstItem="5ym-NR-NUY" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="YFq-qd-TkR"/>
                             <constraint firstAttribute="trailing" secondItem="5ym-NR-NUY" secondAttribute="trailing" id="edr-00-4hy"/>
+                            <constraint firstItem="PoE-3n-uvp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="kc4-Fx-kGP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -39,5 +57,6 @@
     </scenes>
     <resources>
         <image name="background" width="187" height="333"/>
+        <image name="cloudy3" width="256" height="256"/>
     </resources>
 </document>

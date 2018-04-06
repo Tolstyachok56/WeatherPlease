@@ -13,8 +13,9 @@ struct WeatherNotification: PropertyReflectable {
     var date: Date = Date()
     var repeatWeekdays: [Int] = []
     var soundLabel: String = "deskBell"
+    var uuid: String = ""
     
-    static var propertyCount: Int = 4
+    static var propertyCount: Int = 5
 
     var formattedTime: String {
         let formatter = DateFormatter()
@@ -24,11 +25,12 @@ struct WeatherNotification: PropertyReflectable {
     
     init(){}
     
-    init(date: Date, isOn: Bool, repeatWeekdays: [Int], vibration: Bool, soundLabel: String) {
+    init(date: Date, isOn: Bool, repeatWeekdays: [Int], vibration: Bool, soundLabel: String, uuid: String) {
         self.isOn = isOn
         self.date = date
         self.repeatWeekdays = repeatWeekdays
         self.soundLabel = soundLabel
+        self.uuid = uuid
     }
     
     init(_ dict: RepresentationType) {
@@ -36,6 +38,7 @@ struct WeatherNotification: PropertyReflectable {
         self.date = dict["date"] as! Date
         self.repeatWeekdays = dict["repeatWeekdays"] as! [Int]
         self.soundLabel = dict["soundLabel"] as! String
+        self.uuid = dict["uuid"] as! String
     }
     
 }

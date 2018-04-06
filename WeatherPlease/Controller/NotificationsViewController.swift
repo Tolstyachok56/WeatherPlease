@@ -28,6 +28,7 @@ final class NotificationsViewController: UIViewController {
         super.viewWillAppear(animated)
         notificationModel = WeatherNotifications()
         notificationsTableView.reloadData()
+        print(notificationModel.notifications)
     }
     
     @IBAction func editPressed(_ sender: UIBarButtonItem) {
@@ -55,7 +56,7 @@ final class NotificationsViewController: UIViewController {
             
             if segue.identifier == Id.addSegueID {
                 destination.navigationItem.title = "Add"
-                destination.segueInfo = SegueInfo(currentCellIndex: notificationModel.count, editMode: false, isOn: true, repeatWeekdays: [], soundLabel: "deskBell")
+                destination.segueInfo = SegueInfo(currentCellIndex: notificationModel.count, editMode: false, isOn: true, repeatWeekdays: [], soundLabel: "deskBell", uuid: "")
             } else if segue.identifier == Id.editSegueID {
                 destination.navigationItem.title = "Edit"
                 destination.segueInfo = sender as! SegueInfo
@@ -111,7 +112,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
         let currentNotification = notificationModel.notifications[index]
-        performSegue(withIdentifier: Id.editSegueID, sender: SegueInfo(currentCellIndex: index, editMode: true, isOn: currentNotification.isOn, repeatWeekdays: currentNotification.repeatWeekdays, soundLabel: currentNotification.soundLabel))
+        performSegue(withIdentifier: Id.editSegueID, sender: SegueInfo(currentCellIndex: index, editMode: true, isOn: currentNotification.isOn, repeatWeekdays: currentNotification.repeatWeekdays, soundLabel: currentNotification.soundLabel, uuid: currentNotification.uuid))
     }
     
 }

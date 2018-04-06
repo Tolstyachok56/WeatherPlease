@@ -27,7 +27,7 @@ final class Scheduler {
         }
     }
     
-    func setNotification(withDate date: Date, onWeekdays weekdays: [Int], withSound soundLabel: String) {
+    func setNotification(withDate date: Date, onWeekdays weekdays: [Int], withSound soundLabel: String, identifier: String) {
         let center = UNUserNotificationCenter.current()
         
         for weekday in weekdays {
@@ -60,7 +60,7 @@ final class Scheduler {
             
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
             
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
             center.add(request, withCompletionHandler: nil)
             print("Notification setted")
@@ -97,20 +97,29 @@ final class Scheduler {
     }
     
     func reSchedule() {
-        let center = UNUserNotificationCenter.current()
-        center.removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         print("Removed all pending notifications")
         syncNotificationsModel()
         for notification in notificationsModel.notifications {
             if notification.isOn {
-                setNotification(withDate: notification.date, onWeekdays: notification.repeatWeekdays, withSound: notification.soundLabel)
+                setNotification(withDate: notification.date, onWeekdays: notification.repeatWeekdays, withSound: notification.soundLabel, identifier: notification.uuid)
             }
         }
+        print("Setted all enabled notifications")
     }
     
-    func deSchedule() {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        print("Removed all delivered notifications")
+    func deactivateDeliveredNotification(deliveredNotification: UNNotification) {
+        
+        syncNotificationsModel()
+        let uuid = deliveredNotification.request.identifier
+        print("Delivered UUID: \(uuid)")
+        for i in 0...notificationsModel.count - 1 {
+            if notificationsModel.notifications[i].uuid == uuid {
+                notificationsModel.notifications[i].isOn = false
+            }
+        }
+        syncNotificationsModel()
+        print(notificationsModel.notifications)
     }
     
     private func syncNotificationsModel()  {

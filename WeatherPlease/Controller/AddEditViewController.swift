@@ -44,7 +44,8 @@ final class AddEditViewController: UIViewController {
     }
     
     @objc func changePickerValue(sender: UIDatePicker) {
-        print(sender.date)
+        //for debug
+//        print(sender.date)
     }
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         if segueInfo.editMode { delegate.switchEditMode() }
@@ -58,14 +59,13 @@ final class AddEditViewController: UIViewController {
         tempNotification.date = timePicker.date
         tempNotification.repeatWeekdays = segueInfo.repeatWeekdays
         tempNotification.soundLabel = segueInfo.soundLabel
+        tempNotification.uuid = UUID().uuidString
         
         if segueInfo.editMode {
             notificationModel.notifications[segueInfo.currentCellIndex] = tempNotification
             delegate.switchEditMode()
         } else {
             notificationModel.notifications.append(tempNotification)
-            print(notificationModel.notifications)
-            print(WeatherNotifications().notifications)
         }
         scheduler.reSchedule()
         delegate.notificationsTableView.reloadData()
@@ -97,36 +97,56 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if segueInfo.editMode {
-            return 3
-        } else {
+        switch section {
+        case 0:
             return 2
+        case 1:
+            return 1
+        default:
+            return 0
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if segueInfo.editMode {
+            return 2
+        } else {
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-
-        switch indexPath.row {
+        
+        let row = indexPath.row
+        let section = indexPath.section
+        
+        switch row {
         case 0:
-            cell = UITableViewCell(style: .value1, reuseIdentifier: Id.repeatReuseID)
-            cell.textLabel?.text = "Repeat"
-            cell.detailTextLabel?.text = WeekdaysViewController.repeatLabel(weekdays: segueInfo.repeatWeekdays)
-            cell.accessoryType = .disclosureIndicator
+            if section == 0 {
+                cell = UITableViewCell(style: .value1, reuseIdentifier: Id.repeatReuseID)
+                cell.textLabel?.text = "Repeat"
+                cell.textLabel?.textColor = .white
+                cell.detailTextLabel?.text = WeekdaysViewController.repeatLabel(weekdays: segueInfo.repeatWeekdays)
+                cell.detailTextLabel?.textColor = .lightText
+                cell.accessoryType = .disclosureIndicator
+            } else if section == 1 {
+                cell = UITableViewCell(style: .default, reuseIdentifier: Id.deleteReuseID)
+                cell.textLabel?.text = "Delete notification"
+                cell.textLabel?.textColor = UIColor(red: 255/255, green: 200/255, blue: 0/255, alpha: 1)
+                cell.textLabel?.textAlignment = .center
+            }
         case 1:
             cell = UITableViewCell(style: .value1, reuseIdentifier: Id.soundReuseID)
             cell.textLabel?.text = "Sound"
+            cell.textLabel?.textColor = .white
             cell.detailTextLabel?.text = segueInfo.soundLabel
+            cell.detailTextLabel?.textColor = .lightText
             cell.accessoryType = .disclosureIndicator
-        case 2:
-            cell = UITableViewCell(style: .default, reuseIdentifier: Id.deleteReuseID)
-            cell.textLabel?.text = "Delete"
-            cell.textLabel?.textAlignment = .center
         default:
             break
         }
-        cell.textLabel?.textColor = .white
-        cell.detailTextLabel?.textColor = .lightGray
+        
         cell.backgroundColor = .clear
         
         return cell
