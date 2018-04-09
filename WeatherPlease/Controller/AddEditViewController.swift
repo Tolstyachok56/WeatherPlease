@@ -40,13 +40,8 @@ final class AddEditViewController: UIViewController {
             timePicker.date = Date()
         }
         timePicker.setValuesForKeys(["textColor": UIColor.white, "highlightsToday": false])
-        timePicker.addTarget(self, action: #selector(changePickerValue), for: .valueChanged)
     }
     
-    @objc func changePickerValue(sender: UIDatePicker) {
-        //for debug
-//        print(sender.date)
-    }
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         if segueInfo.editMode { delegate.switchEditMode() }
         self.navigationController?.popViewController(animated: true)
@@ -121,28 +116,28 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
         let row = indexPath.row
         let section = indexPath.section
         
-        switch row {
+        switch section {
         case 0:
-            if section == 0 {
+            if row == 0 {
                 cell = UITableViewCell(style: .value1, reuseIdentifier: Id.repeatReuseID)
                 cell.textLabel?.text = "Repeat"
                 cell.textLabel?.textColor = .white
                 cell.detailTextLabel?.text = WeekdaysViewController.repeatLabel(weekdays: segueInfo.repeatWeekdays)
                 cell.detailTextLabel?.textColor = .lightText
                 cell.accessoryType = .disclosureIndicator
-            } else if section == 1 {
-                cell = UITableViewCell(style: .default, reuseIdentifier: Id.deleteReuseID)
-                cell.textLabel?.text = "Delete notification"
-                cell.textLabel?.textColor = UIColor(red: 255/255, green: 200/255, blue: 0/255, alpha: 1)
-                cell.textLabel?.textAlignment = .center
+            } else if row == 1 {
+                cell = UITableViewCell(style: .value1, reuseIdentifier: Id.soundReuseID)
+                cell.textLabel?.text = "Sound"
+                cell.textLabel?.textColor = .white
+                cell.detailTextLabel?.text = segueInfo.soundLabel
+                cell.detailTextLabel?.textColor = .lightText
+                cell.accessoryType = .disclosureIndicator
             }
         case 1:
-            cell = UITableViewCell(style: .value1, reuseIdentifier: Id.soundReuseID)
-            cell.textLabel?.text = "Sound"
-            cell.textLabel?.textColor = .white
-            cell.detailTextLabel?.text = segueInfo.soundLabel
-            cell.detailTextLabel?.textColor = .lightText
-            cell.accessoryType = .disclosureIndicator
+            cell = UITableViewCell(style: .default, reuseIdentifier: Id.deleteReuseID)
+            cell.textLabel?.text = "Delete notification"
+            cell.textLabel?.textColor = UIColor(red: 255/255, green: 200/255, blue: 0/255, alpha: 1)
+            cell.textLabel?.textAlignment = .center
         default:
             break
         }
@@ -155,12 +150,18 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
+        
+        let row = indexPath.row
+        let section = indexPath.section
+        
+        switch section {
         case 0:
-            performSegue(withIdentifier: Id.weekdaysSegueID, sender: nil)
+            if row == 0 {
+                performSegue(withIdentifier: Id.weekdaysSegueID, sender: nil)
+            } else if row == 1 {
+                performSegue(withIdentifier: Id.soundSegueID, sender: nil)
+            }
         case 1:
-            performSegue(withIdentifier: Id.soundSegueID, sender: nil)
-        case 2:
             notificationModel.notifications.remove(at: segueInfo.currentCellIndex)
             scheduler.reSchedule()
             delegate.switchEditMode()

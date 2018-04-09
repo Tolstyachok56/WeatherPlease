@@ -13,10 +13,12 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let scheduler = Scheduler()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         appDesign()
         UNUserNotificationCenter.current().delegate = self
+        scheduler.deactivateAllDeliveredNotifications()
         return true
     }
 
@@ -76,9 +78,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let scheduler = Scheduler()
-        scheduler.deactivateDeliveredNotification(deliveredNotification: notification)
+        scheduler.deactivate(deliveredNotification: notification)
+        scheduler.deactivateAllDeliveredNotifications()
+        
+        if let rootVC = self.window?.rootViewController as? UITabBarController,
+            let selectedVC = rootVC.selectedViewController as? UINavigationController,
+            let visibleVC = selectedVC.visibleViewController as? NotificationsViewController{
+            visibleVC.notificationsTableView.reloadData()
+        }
         completionHandler([.alert, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            scheduler.deactivate(deliveredNotification: response.notification)
+            scheduler.deactivateAllDeliveredNotifications()
+        }
+        completionHandler()
     }
     
 }

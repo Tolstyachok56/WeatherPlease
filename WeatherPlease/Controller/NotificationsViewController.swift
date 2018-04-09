@@ -28,7 +28,6 @@ final class NotificationsViewController: UIViewController {
         super.viewWillAppear(animated)
         notificationModel = WeatherNotifications()
         notificationsTableView.reloadData()
-        print(notificationModel.notifications)
     }
     
     @IBAction func editPressed(_ sender: UIBarButtonItem) {

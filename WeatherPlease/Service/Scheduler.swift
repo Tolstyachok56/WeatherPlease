@@ -19,53 +19,37 @@ final class Scheduler {
             if error != nil {
                 print(String(describing: error?.localizedDescription))
             }
-            if granted {
-                print("Notifications allowed")
-            } else {
-                print("Notifications not allowed")
-            }
+//            granted ? print("Notifications allowed") : print("Notifications not allowed")
         }
     }
     
     func setNotification(withDate date: Date, onWeekdays weekdays: [Int], withSound soundLabel: String, identifier: String) {
         let center = UNUserNotificationCenter.current()
         
-        for weekday in weekdays {
-            let content = UNMutableNotificationContent()
-            content.title = "Hello, dear!"
-            content.body = "It's time to check the weather"
-            content.sound = UNNotificationSound(named:"\(soundLabel).mp3")
-            
-            var dateComponents = DateComponents()
-            let calendar = Calendar.current
-            dateComponents.hour = calendar.component(.hour, from: date)
-            dateComponents.minute = calendar.component(.minute, from: date)
-            dateComponents.weekday = weekday
-          
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-            
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-            
-            center.add(request, withCompletionHandler: nil)
-            print("Notification setted")
-        }
+        let content = UNMutableNotificationContent()
+        content.title = "Hello, dear!"
+        content.body = "It's time to check the weather"
+        content.sound = UNNotificationSound(named:"\(soundLabel).mp3")
         
         if weekdays.isEmpty {
-            let content = UNMutableNotificationContent()
-            content.title = "Hello, dear!"
-            content.body = "It's time to check the weather"
-            content.sound = UNNotificationSound(named:"\(soundLabel).mp3")
-            
             let dateComponents = setCorrectDateComponents(date: date)
-            
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-            
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            
             center.add(request, withCompletionHandler: nil)
-            print("Notification setted")
+        } else {
+            for weekday in weekdays {
+                
+                var dateComponents = DateComponents()
+                let calendar = Calendar.current
+                dateComponents.hour = calendar.component(.hour, from: date)
+                dateComponents.minute = calendar.component(.minute, from: date)
+                dateComponents.weekday = weekday
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                center.add(request, withCompletionHandler: nil)
+            }
         }
-        
     }
     
     func setCorrectDateComponents(date: Date) -> DateComponents {
@@ -93,7 +77,6 @@ final class Scheduler {
         dateComponents.minute = dateMinute
         
         return dateComponents
-        
     }
     
     func reSchedule() {
@@ -103,23 +86,35 @@ final class Scheduler {
         for notification in notificationsModel.notifications {
             if notification.isOn {
                 setNotification(withDate: notification.date, onWeekdays: notification.repeatWeekdays, withSound: notification.soundLabel, identifier: notification.uuid)
+                print("Set: \(notification.uuid)")
             }
         }
         print("Setted all enabled notifications")
     }
     
-    func deactivateDeliveredNotification(deliveredNotification: UNNotification) {
-        
+    func deactivate(deliveredNotification: UNNotification) {
         syncNotificationsModel()
         let uuid = deliveredNotification.request.identifier
-        print("Delivered UUID: \(uuid)")
         for i in 0...notificationsModel.count - 1 {
             if notificationsModel.notifications[i].uuid == uuid {
                 notificationsModel.notifications[i].isOn = false
             }
         }
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [uuid])
+        print("Deactivated")
+    }
+    
+    func deactivateAllDeliveredNotifications() {
         syncNotificationsModel()
-        print(notificationsModel.notifications)
+        UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
+            for notification in notifications {
+                print("Deactivate: \(notification.request.identifier)")
+                self.deactivate(deliveredNotification: notification)
+            }
+            self.syncNotificationsModel()
+            print(self.notificationsModel.notifications)
+            print("Deactivated all delivered notifications")
+        }
     }
     
     private func syncNotificationsModel()  {

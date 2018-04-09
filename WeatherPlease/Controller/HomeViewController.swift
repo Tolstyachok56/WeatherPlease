@@ -80,7 +80,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
-            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
+//            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
             weatherService.getWeather(latitude: String(location.coordinate.latitude),
                                       longitude: String(location.coordinate.longitude))
         }

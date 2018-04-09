@@ -23,7 +23,6 @@ class WeatherService {
                              "appid": APP_ID]
         Alamofire.request(WEATHER_URL, method: .get, parameters: requestParams).responseJSON { (response) in
             if response.result.isSuccess {
-                print("Success. Got the weather data")
                 self.delegate.rotateTimer.invalidate()
                 let weatherJSON: JSON = JSON(response.result.value!)
                 self.updateWeatherData(json: weatherJSON)
