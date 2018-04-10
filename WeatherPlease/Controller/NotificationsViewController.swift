@@ -18,7 +18,8 @@ final class NotificationsViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    //MARK: - Methods
+    //MARK: - VC Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scheduler.registerLocalNotifications()
@@ -30,25 +31,38 @@ final class NotificationsViewController: UIViewController {
         notificationsTableView.reloadData()
     }
     
+     //MARK: - Methods
+    
     @IBAction func editPressed(_ sender: UIBarButtonItem) {
         switchEditMode()
     }
     
     func switchEditMode() {
         notificationsTableView.isEditing = !notificationsTableView.isEditing
-        
-        if notificationsTableView.isEditing {
-            editButton.title = "Done"
-            addButton.isEnabled = false
-            notificationsTableView.allowsSelection = true
-        } else {
-            editButton.title = "Edit"
+        updateAppearance(accordingTo: notificationsTableView)
+    }
+    
+    private func updateAppearance(accordingTo tableView: UITableView) {
+        if notificationModel.count == 0 {
             addButton.isEnabled = true
-            notificationsTableView.allowsSelection = false
+            editButton.isEnabled = false
+            editButton.title = ""
+            tableView.separatorStyle = .none
+        } else if tableView.isEditing {
+            addButton.isEnabled = false
+            editButton.isEnabled = true
+            editButton.title = "Done"
+            tableView.allowsSelection = true
+        } else {
+            addButton.isEnabled = true
+            editButton.isEnabled = true
+            editButton.title = "Edit"
+            tableView.allowsSelection = false
         }
     }
 
     // MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? AddEditViewController {
             destination.hidesBottomBarWhenPushed = true
@@ -68,13 +82,10 @@ final class NotificationsViewController: UIViewController {
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfRows = notificationModel.count
-        if numberOfRows == 0 {
-            tableView.separatorStyle = .none
-        } else {
-            tableView.separatorStyle = .singleLine
-        }
+        updateAppearance(accordingTo: tableView)
         return numberOfRows
     }
     
@@ -96,10 +107,15 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
             notificationModel.notifications.remove(at: indexPath.row)
             scheduler.reSchedule()
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            if notificationModel.count == 0 {
+                switchEditMode()
+            }
         }
     }
     
     //MARK: - UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90.0
     }

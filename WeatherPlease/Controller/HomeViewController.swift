@@ -13,19 +13,19 @@ final class HomeViewController: UIViewController {
     
     //MARK: - Variables
     private let locationManager = CLLocationManager()
-    var weatherService = WeatherService()
-    
-    let weatherDataModel = WeatherDataModel()
+    private var weatherService = WeatherService()
+    private let weatherDataModel = WeatherDataModel()
 
     // weather ui
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var windLabel: UILabel!
     
     // refresh button
     @IBOutlet weak var refreshButton: UIButton!
-    var rotateTimer = Timer()
+    private var rotateTimer = Timer()
     private var rotateDegree = CGFloat.pi/3
     
     //MARK: - VC Lifecycle
@@ -41,9 +41,16 @@ final class HomeViewController: UIViewController {
     
     func updateUIWithWeatherData() {
         locationLabel.text = weatherDataModel.locationName
+        descriptionLabel.text = weatherDataModel.description
         weatherImage.image = UIImage(named: weatherDataModel.weatherImageName)
         temperatureLabel.text = "\(weatherDataModel.temperature) ºC"
         windLabel.text = "\(weatherDataModel.windSpeed) m/s"
+    }
+    
+    func updateUIDefault() {
+        descriptionLabel.text = ""
+        temperatureLabel.text = "--ºC"
+        windLabel.text = "--m/s"
     }
     
     // MARK: - Refresh
@@ -80,7 +87,6 @@ extension HomeViewController: CLLocationManagerDelegate {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
-//            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
             weatherService.getWeather(latitude: String(location.coordinate.latitude),
                                       longitude: String(location.coordinate.longitude))
         }
@@ -89,8 +95,7 @@ extension HomeViewController: CLLocationManagerDelegate {
     internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
         locationLabel.text = "Location unavailable"
-        temperatureLabel.text = "--ºC"
-        windLabel.text = "--m/s"
+        updateUIDefault()
     }
     
 }

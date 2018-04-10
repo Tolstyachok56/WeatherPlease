@@ -11,11 +11,13 @@ import UIKit
 class SoundsViewController: UIViewController {
     
     //MARK: - Variables
-    let soundArray = ["deskBell", "icyBell", "slightBell"]
+    
+    private let soundArray = ["deskBell", "icyBell", "slightBell"]
     var soundLabel: String!
     var delegate: AddEditViewController!
 
     //MARK: - Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

@@ -11,15 +11,16 @@ import UIKit
 final class AddEditViewController: UIViewController {
     
     //MARK: - Variables
+    
     var delegate: NotificationsViewController!
-    let scheduler = Scheduler()
-    var notificationModel: WeatherNotifications = WeatherNotifications()
+    private let scheduler = Scheduler()
+    private var notificationModel: WeatherNotifications = WeatherNotifications()
     var segueInfo: SegueInfo!
     
     @IBOutlet weak var timePicker: UIDatePicker!
     @IBOutlet weak var settingsTableView: UITableView!
     
-    //MARK: - Methods
+    //MARK: - VC Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,6 +33,7 @@ final class AddEditViewController: UIViewController {
         configureTimePicker()
     }
     
+    //MARK: - Methods
     
     private func configureTimePicker() {
         if segueInfo.editMode {
@@ -69,6 +71,7 @@ final class AddEditViewController: UIViewController {
     
     
     //MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == Id.weekdaysSegueID {
@@ -91,6 +94,7 @@ final class AddEditViewController: UIViewController {
 extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -112,7 +116,6 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        
         let row = indexPath.row
         let section = indexPath.section
         
@@ -149,8 +152,8 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     //MARK: - UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let row = indexPath.row
         let section = indexPath.section
         

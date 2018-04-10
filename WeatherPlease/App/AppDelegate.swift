@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        updateHomeViewController()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -64,12 +63,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarAppearance.isTranslucent = true
     }
     
-    func updateHomeViewController() {
+    private func updateHomeViewController() {
         if let rootVC = window?.rootViewController as? UITabBarController {
             rootVC.selectedIndex = 0
             if let homeVC = rootVC.selectedViewController as? HomeViewController {
                 homeVC.refresh(homeVC.refreshButton)
             }
+        }
+    }
+    
+    private func reloadNotificationsTableView() {
+        if let rootVC = self.window?.rootViewController as? UITabBarController,
+            let selectedVC = rootVC.selectedViewController as? UINavigationController,
+            let visibleVC = selectedVC.visibleViewController as? NotificationsViewController{
+            visibleVC.notificationsTableView.reloadData()
         }
     }
     
@@ -80,12 +87,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         scheduler.deactivate(deliveredNotification: notification)
         scheduler.deactivateAllDeliveredNotifications()
-        
-        if let rootVC = self.window?.rootViewController as? UITabBarController,
-            let selectedVC = rootVC.selectedViewController as? UINavigationController,
-            let visibleVC = selectedVC.visibleViewController as? NotificationsViewController{
-            visibleVC.notificationsTableView.reloadData()
-        }
+        reloadNotificationsTableView()
         completionHandler([.alert, .sound])
     }
     
@@ -94,6 +96,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             scheduler.deactivate(deliveredNotification: response.notification)
             scheduler.deactivateAllDeliveredNotifications()
         }
+        updateHomeViewController()
         completionHandler()
     }
     

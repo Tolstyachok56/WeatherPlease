@@ -10,12 +10,16 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class WeatherService {
+final class WeatherService {
     
     private let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather/"
     private let APP_ID = "6f3162859065dbac6ceb0d7e8ff4fb98"
     
+    //MARK: - Variables
+    
     var delegate: HomeViewController!
+    
+    //MARK: - Methods
     
     func getWeather(latitude: String, longitude: String) {
         let requestParams = ["lat": latitude,
@@ -30,8 +34,7 @@ class WeatherService {
                 print("Error: \(response.result.error!)")
                 self.delegate.rotateTimer.invalidate()
                 self.delegate.locationLabel.text = "Connection issues"
-                self.delegate.temperatureLabel.text = "--ºC"
-                self.delegate.windLabel.text = "--m/s"
+                self.delegate.updateUIDefault()
             }
         }
     }
@@ -41,8 +44,8 @@ class WeatherService {
             let weather = self.delegate.weatherDataModel
             weather.temperature = Int(temperatureResult - 273.15)
             weather.locationName = json["name"].stringValue
+            weather.description = json["weather"][0]["description"].stringValue.capitalized
             weather.condition = json["weather"][0]["id"].intValue
-            weather.description = json["weather"][0]["description"].stringValue
             weather.windSpeed = json["wind"]["speed"].intValue
             weather.weatherImageName = weather.getWeatherImage(forConditionID: weather.condition)
             self.delegate.updateUIWithWeatherData()

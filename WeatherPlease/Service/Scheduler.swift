@@ -11,7 +11,11 @@ import UserNotifications
 
 final class Scheduler {
     
-    var notificationsModel: WeatherNotifications = WeatherNotifications()
+    //MARK: - Variables
+    
+    private var notificationsModel: WeatherNotifications = WeatherNotifications()
+    
+    //MARK: - Methods
     
     func registerLocalNotifications() {
         let center = UNUserNotificationCenter.current()
@@ -52,7 +56,7 @@ final class Scheduler {
         }
     }
     
-    func setCorrectDateComponents(date: Date) -> DateComponents {
+    private func setCorrectDateComponents(date: Date) -> DateComponents {
         let calendar = Calendar.current
         
         let dateHour = calendar.component(.hour, from: date)
