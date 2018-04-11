@@ -16,6 +16,10 @@ final class Scheduler {
     private var notificationsModel: WeatherNotifications = WeatherNotifications()
     
     //MARK: - Methods
+
+    private func syncNotificationsModel()  {
+        notificationsModel = WeatherNotifications()
+    }
     
     func registerLocalNotifications() {
         let center = UNUserNotificationCenter.current()
@@ -23,12 +27,10 @@ final class Scheduler {
             if error != nil {
                 print(String(describing: error?.localizedDescription))
             }
-//            granted ? print("Notifications allowed") : print("Notifications not allowed")
         }
     }
-    
+
     func setNotification(withDate date: Date, onWeekdays weekdays: [Int], withSound soundLabel: String, identifier: String) {
-        let center = UNUserNotificationCenter.current()
         
         let content = UNMutableNotificationContent()
         content.title = "Hello, dear!"
@@ -36,10 +38,8 @@ final class Scheduler {
         content.sound = UNNotificationSound(named:"\(soundLabel).mp3")
         
         if weekdays.isEmpty {
-            let dateComponents = setCorrectDateComponents(date: date)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            center.add(request, withCompletionHandler: nil)
+            let dateComponents = getCorrectDateComponents(date: date)
+            addRequest(identifier: identifier, content: content, triggerDateComponents: dateComponents)
         } else {
             for weekday in weekdays {
                 
@@ -49,14 +49,18 @@ final class Scheduler {
                 dateComponents.minute = calendar.component(.minute, from: date)
                 dateComponents.weekday = weekday
                 
-                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                center.add(request, withCompletionHandler: nil)
+                addRequest(identifier: UUID().uuidString, content: content, triggerDateComponents: dateComponents)
             }
         }
     }
     
-    private func setCorrectDateComponents(date: Date) -> DateComponents {
+    private func addRequest(identifier: String, content: UNMutableNotificationContent, triggerDateComponents: DateComponents) {
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDateComponents, repeats: true)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
+    
+    private func getCorrectDateComponents(date: Date) -> DateComponents {
         let calendar = Calendar.current
         
         let dateHour = calendar.component(.hour, from: date)
@@ -100,7 +104,8 @@ final class Scheduler {
         syncNotificationsModel()
         let uuid = deliveredNotification.request.identifier
         for i in 0...notificationsModel.count - 1 {
-            if notificationsModel.notifications[i].uuid == uuid {
+            let notification = notificationsModel.notifications[i]
+            if notification.repeatWeekdays.isEmpty &&  notification.uuid == uuid {
                 notificationsModel.notifications[i].isOn = false
             }
         }
@@ -121,8 +126,5 @@ final class Scheduler {
         }
     }
     
-    private func syncNotificationsModel()  {
-        notificationsModel = WeatherNotifications()
-    }
 }
 

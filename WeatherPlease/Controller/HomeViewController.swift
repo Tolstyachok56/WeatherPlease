@@ -14,7 +14,7 @@ final class HomeViewController: UIViewController {
     //MARK: - Variables
     private let locationManager = CLLocationManager()
     private var weatherService = WeatherService()
-    private let weatherDataModel = WeatherDataModel()
+    let weatherDataModel = WeatherDataModel()
 
     // weather ui
     @IBOutlet weak var locationLabel: UILabel!
@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController {
     
     // refresh button
     @IBOutlet weak var refreshButton: UIButton!
-    private var rotateTimer = Timer()
+    var rotateTimer = Timer()
     private var rotateDegree = CGFloat.pi/3
     
     //MARK: - VC Lifecycle

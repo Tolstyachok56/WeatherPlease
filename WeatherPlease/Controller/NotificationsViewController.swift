@@ -53,11 +53,13 @@ final class NotificationsViewController: UIViewController {
             editButton.isEnabled = true
             editButton.title = "Done"
             tableView.allowsSelection = true
+            tableView.separatorStyle = .singleLine
         } else {
             addButton.isEnabled = true
             editButton.isEnabled = true
             editButton.title = "Edit"
             tableView.allowsSelection = false
+            tableView.separatorStyle = .singleLine
         }
     }
 

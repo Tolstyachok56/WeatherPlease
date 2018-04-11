@@ -35,22 +35,22 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pz-lK-Q4Q" userLabel="Main View">
-                                <rect key="frame" x="0.0" y="82" width="375" height="536"/>
+                                <rect key="frame" x="0.0" y="62" width="375" height="556"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UaM-lL-bI1" userLabel="Top Container">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="107.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="111.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SZK-zS-X3w">
-                                                <rect key="frame" x="0.0" y="10.5" width="375" height="85.5"/>
+                                                <rect key="frame" x="0.0" y="10.5" width="375" height="89.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching location" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MMg-Ya-hbU" userLabel="Location Label">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BV2-C4-FPA" userLabel="Description Label">
-                                                        <rect key="frame" x="0.0" y="51" width="375" height="34.5"/>
+                                                        <rect key="frame" x="0.0" y="53" width="375" height="36.5"/>
                                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="20"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -73,10 +73,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3AM-B9-8t2" userLabel="Center Container">
-                                        <rect key="frame" x="0.0" y="107.5" width="375" height="267.5"/>
+                                        <rect key="frame" x="0.0" y="111.5" width="375" height="277.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-Uf-fUP" userLabel="Weather Image View">
-                                                <rect key="frame" x="61" y="7.5" width="254" height="254"/>
+                                                <rect key="frame" x="56" y="7.5" width="264" height="264"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="dhf-Uf-fUP" secondAttribute="height" multiplier="1:1" id="Gf8-yE-y2p"/>
                                                 </constraints>
@@ -89,19 +89,19 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7XY-dS-nRL" userLabel="Bottom Container">
-                                        <rect key="frame" x="0.0" y="375" width="375" height="161"/>
+                                        <rect key="frame" x="0.0" y="389" width="375" height="167"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yOc-th-Vmk">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="129"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="134"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--ºC" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3Mi-QX-weW" userLabel="Temperature Label">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="60"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- m/s" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Zi8-17-3Z3" userLabel="Wind Label">
-                                                        <rect key="frame" x="0.0" y="77" width="375" height="52"/>
+                                                        <rect key="frame" x="0.0" y="80" width="375" height="54"/>
                                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="35"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -152,7 +152,7 @@
                             <constraint firstItem="5pz-lK-Q4Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ooE-y1-cYU"/>
                             <constraint firstAttribute="trailing" secondItem="5pz-lK-Q4Q" secondAttribute="trailing" id="yjr-vv-zQu"/>
                             <constraint firstAttribute="trailing" secondItem="6rj-Jw-tKH" secondAttribute="trailing" id="zLg-2t-1fu"/>
-                            <constraint firstItem="5pz-lK-Q4Q" firstAttribute="top" secondItem="Piv-q3-W06" secondAttribute="bottom" constant="20" id="zbl-1R-IXe"/>
+                            <constraint firstItem="5pz-lK-Q4Q" firstAttribute="top" secondItem="Piv-q3-W06" secondAttribute="bottom" id="zbl-1R-IXe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -211,6 +211,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="2sX-52-7bp">
                             <connections>
+                                <action selector="addPressed:" destination="2FY-dg-8gE" id="N6X-Vh-BdC"/>
                                 <segue destination="VPN-l2-DtG" kind="show" identifier="toAdd" id="DQq-it-2aa"/>
                             </connections>
                         </barButtonItem>

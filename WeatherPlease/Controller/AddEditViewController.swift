@@ -50,9 +50,7 @@ final class AddEditViewController: UIViewController {
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
-        
         var tempNotification = WeatherNotification()
-
         tempNotification.date = timePicker.date
         tempNotification.repeatWeekdays = segueInfo.repeatWeekdays
         tempNotification.soundLabel = segueInfo.soundLabel
@@ -64,6 +62,7 @@ final class AddEditViewController: UIViewController {
         } else {
             notificationModel.notifications.append(tempNotification)
         }
+        
         scheduler.reSchedule()
         delegate.notificationsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
