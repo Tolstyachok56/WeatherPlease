@@ -19,6 +19,7 @@
 		04309B87206A65C000201E62 /* SegueInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04309B86206A65C000201E62 /* SegueInfo.swift */; };
 		04309B89206A6FE500201E62 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04309B88206A6FE500201E62 /* Identifier.swift */; };
 		04309BAC206BD85900201E62 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04309BAB206BD85800201E62 /* Scheduler.swift */; };
+		0448E4C320726779000AB42D /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448E4C220726779000AB42D /* WeatherService.swift */; };
 		0458CC2B201F4C12004A5BBF /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458CC2A201F4C12004A5BBF /* WeatherDataModel.swift */; };
 		04CE493B202861DF007941F7 /* WeatherNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE493A202861DF007941F7 /* WeatherNotificationModel.swift */; };
 		04CE493D202867B9007941F7 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */; };
@@ -45,6 +46,7 @@
 		04309B86206A65C000201E62 /* SegueInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueInfo.swift; sourceTree = "<group>"; };
 		04309B88206A6FE500201E62 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		04309BAB206BD85800201E62 /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		0448E4C220726779000AB42D /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		0458CC2A201F4C12004A5BBF /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
 		04CE493A202861DF007941F7 /* WeatherNotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNotificationModel.swift; sourceTree = "<group>"; };
 		04CE493C202867B9007941F7 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = WeatherPlease/Controller/Notifications/NotificationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -94,6 +96,7 @@
 				0410CBAB201F343F00D86E29 /* Assets.xcassets */,
 				04CE494020286EFA007941F7 /* Sounds */,
 				04CE493920285DA3007941F7 /* App */,
+				0448E4C620727E4D000AB42D /* Service */,
 				0458CC27201F4B24004A5BBF /* Controller */,
 				0458CC29201F4BAD004A5BBF /* Model */,
 				04309B7F2064FF7C00201E62 /* Protocol */,
@@ -110,6 +113,15 @@
 				04309B8420650CD800201E62 /* Persistent.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		0448E4C620727E4D000AB42D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0448E4C220726779000AB42D /* WeatherService.swift */,
+				04309BAB206BD85800201E62 /* Scheduler.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		0458CC27201F4B24004A5BBF /* Controller */ = {
@@ -149,7 +161,6 @@
 			children = (
 				0410CBA1201F343F00D86E29 /* AppDelegate.swift */,
 				04309B88206A6FE500201E62 /* Identifier.swift */,
-				04309BAB206BD85800201E62 /* Scheduler.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -211,7 +222,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Виктория Бадисова";
 				TargetAttributes = {
 					0410CB9D201F343F00D86E29 = {
@@ -219,7 +230,10 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 						};
 					};
@@ -287,11 +301,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-WeatherPlease/Pods-WeatherPlease-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeableTabBarController/SwipeableTabBarController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeableTabBarController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -330,6 +346,7 @@
 				04CE494A2028B4E9007941F7 /* AddEditViewController.swift in Sources */,
 				04309B8520650CD800201E62 /* Persistent.swift in Sources */,
 				04309B87206A65C000201E62 /* SegueInfo.swift in Sources */,
+				0448E4C320726779000AB42D /* WeatherService.swift in Sources */,
 				0408DBDC206290B000502D06 /* SoundsViewController.swift in Sources */,
 				0410CBA4201F343F00D86E29 /* HomeViewController.swift in Sources */,
 				0410CBA2201F343F00D86E29 /* AppDelegate.swift in Sources */,
@@ -373,6 +390,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -380,6 +398,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -430,6 +449,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -437,6 +457,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -479,7 +500,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vbadisova.WeatherPlease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -496,7 +517,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vbadisova.WeatherPlease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

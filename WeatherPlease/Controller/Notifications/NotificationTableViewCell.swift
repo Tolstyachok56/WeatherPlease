@@ -18,12 +18,19 @@ final class NotificationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    private func configureLabel(_ label: UILabel, text: String, color: UIColor, fontSize: CGFloat, fontWeight: UIFont.Weight) {
+        label.text = text
+        label.textColor = color
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
+        
+    }
+    
     func configure(row: Int) {
         let weatherNotificationsModel = WeatherNotifications()
         let notification = weatherNotificationsModel.notifications[row]
         
-        configureLabel(self.textLabel!, text: notification.formattedTime, color: .white, fontSize: 50)
-        configureLabel(self.detailTextLabel!, text: WeekdaysViewController.repeatLabel(weekdays: notification.repeatWeekdays), color: .white, fontSize: 14)
+        configureLabel(self.textLabel!, text: notification.formattedTime, color: .white, fontSize: 50, fontWeight: .light)
+        configureLabel(self.detailTextLabel!, text: WeekdaysViewController.repeatLabel(weekdays: notification.repeatWeekdays), color: .white, fontSize: 14, fontWeight: .thin)
         
         let notificationSwitch = UISwitch(frame: CGRect())
         notificationSwitch.tag = row
@@ -37,14 +44,7 @@ final class NotificationTableViewCell: UITableViewCell {
     @objc private func onOffSwitchPressed(_ sender: UISwitch) {
         let weatherNotificationsModel = WeatherNotifications()
         weatherNotificationsModel.notifications[sender.tag].isOn = sender.isOn
-        let scheduler = Scheluler()
+        let scheduler = Scheduler()
         scheduler.reSchedule()
     }
-    
-    private func configureLabel(_ label: UILabel, text: String, color: UIColor, fontSize: CGFloat) {
-        label.text = text
-        label.textColor = color
-        label.font = label.font.withSize(fontSize)
-    }
-    
 }

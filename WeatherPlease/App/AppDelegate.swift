@@ -13,12 +13,12 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let scheduler = Scheduler()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         appDesign()
         UNUserNotificationCenter.current().delegate = self
-        
+        scheduler.deactivateAllDeliveredNotifications()
         return true
     }
 
@@ -63,12 +63,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarAppearance.isTranslucent = true
     }
     
+    private func updateHomeViewController() {
+        if let rootVC = window?.rootViewController as? UITabBarController {
+            rootVC.selectedIndex = 0
+            if let homeVC = rootVC.selectedViewController as? HomeViewController {
+                homeVC.refresh(homeVC.refreshButton)
+            }
+        }
+    }
+    
+    private func reloadNotificationsTableView() {
+        if let rootVC = self.window?.rootViewController as? UITabBarController,
+            let selectedVC = rootVC.selectedViewController as? UINavigationController,
+            let visibleVC = selectedVC.visibleViewController as? NotificationsViewController{
+            visibleVC.notificationsTableView.reloadData()
+        }
+    }
+    
 }
-
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        scheduler.deactivate(deliveredNotification: notification)
+        scheduler.deactivateAllDeliveredNotifications()
+        reloadNotificationsTableView()
         completionHandler([.alert, .sound])
     }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            scheduler.deactivate(deliveredNotification: response.notification)
+            scheduler.deactivateAllDeliveredNotifications()
+        }
+        updateHomeViewController()
+        completionHandler()
+    }
+    
 }

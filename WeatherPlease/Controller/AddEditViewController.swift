@@ -11,22 +11,21 @@ import UIKit
 final class AddEditViewController: UIViewController {
     
     //MARK: - Variables
+    
     var delegate: NotificationsViewController!
-    let scheduler = Scheluler()
-    var notificationModel: WeatherNotifications = WeatherNotifications()
+    private let scheduler = Scheduler()
+    private var notificationModel: WeatherNotifications = WeatherNotifications()
     var segueInfo: SegueInfo!
-    var vibrationIsOn: Bool = true
     
     @IBOutlet weak var timePicker: UIDatePicker!
     @IBOutlet weak var settingsTableView: UITableView!
     
-    //MARK: - Methods
+    //MARK: - VC Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         notificationModel = WeatherNotifications()
         settingsTableView.reloadData()
-        vibrationIsOn = segueInfo.vibration
     }
     
     override func viewDidLoad() {
@@ -34,6 +33,7 @@ final class AddEditViewController: UIViewController {
         configureTimePicker()
     }
     
+    //MARK: - Methods
     
     private func configureTimePicker() {
         if segueInfo.editMode {
@@ -42,25 +42,19 @@ final class AddEditViewController: UIViewController {
             timePicker.date = Date()
         }
         timePicker.setValuesForKeys(["textColor": UIColor.white, "highlightsToday": false])
-        timePicker.addTarget(self, action: #selector(changePickerValue), for: .valueChanged)
     }
     
-    @objc func changePickerValue(sender: UIDatePicker) {
-        print(sender.date)
-    }
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         if segueInfo.editMode { delegate.switchEditMode() }
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
-        
         var tempNotification = WeatherNotification()
-
         tempNotification.date = timePicker.date
         tempNotification.repeatWeekdays = segueInfo.repeatWeekdays
         tempNotification.soundLabel = segueInfo.soundLabel
-        tempNotification.vibration = vibrationIsOn
+        tempNotification.uuid = UUID().uuidString
         
         if segueInfo.editMode {
             notificationModel.notifications[segueInfo.currentCellIndex] = tempNotification
@@ -68,17 +62,15 @@ final class AddEditViewController: UIViewController {
         } else {
             notificationModel.notifications.append(tempNotification)
         }
+        
         scheduler.reSchedule()
         delegate.notificationsTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func vibrationSwitchPressed(_ sender: UISwitch) {
-        vibrationIsOn = sender.isOn
-    }
-    
     
     //MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == Id.weekdaysSegueID {
@@ -101,46 +93,57 @@ final class AddEditViewController: UIViewController {
 extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 2
+        case 1:
+            return 1
+        default:
+            return 0
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         if segueInfo.editMode {
-            return 4
+            return 2
         } else {
-            return 3
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-
-        switch indexPath.row {
+        let row = indexPath.row
+        let section = indexPath.section
+        
+        switch section {
         case 0:
-            cell = UITableViewCell(style: .value1, reuseIdentifier: Id.repeatReuseID)
-            cell.textLabel?.text = "Repeat"
-            cell.detailTextLabel?.text = WeekdaysViewController.repeatLabel(weekdays: segueInfo.repeatWeekdays)
-            cell.accessoryType = .disclosureIndicator
-        case 1:
-            cell = UITableViewCell(style: .value1, reuseIdentifier: Id.soundReuseID)
-            cell.textLabel?.text = "Sound"
-            cell.detailTextLabel?.text = segueInfo.soundLabel
-            cell.accessoryType = .disclosureIndicator
-        case 2:
-            cell = UITableViewCell(style: .default, reuseIdentifier: Id.vibrationReuseID)
-            cell.textLabel?.text = "Vibration"
-            let vibrationSwitch = UISwitch(frame: CGRect())
-            vibrationSwitch.addTarget(self, action: #selector(vibrationSwitchPressed(_:)), for: .valueChanged)
-            if vibrationIsOn {
-                vibrationSwitch.setOn(true, animated: false)
+            if row == 0 {
+                cell = UITableViewCell(style: .value1, reuseIdentifier: Id.repeatReuseID)
+                cell.textLabel?.text = "Repeat"
+                cell.textLabel?.textColor = .white
+                cell.detailTextLabel?.text = WeekdaysViewController.repeatLabel(weekdays: segueInfo.repeatWeekdays)
+                cell.detailTextLabel?.textColor = .lightText
+                cell.accessoryType = .disclosureIndicator
+            } else if row == 1 {
+                cell = UITableViewCell(style: .value1, reuseIdentifier: Id.soundReuseID)
+                cell.textLabel?.text = "Sound"
+                cell.textLabel?.textColor = .white
+                cell.detailTextLabel?.text = segueInfo.soundLabel
+                cell.detailTextLabel?.textColor = .lightText
+                cell.accessoryType = .disclosureIndicator
             }
-            cell.accessoryView = vibrationSwitch
-        case 3:
+        case 1:
             cell = UITableViewCell(style: .default, reuseIdentifier: Id.deleteReuseID)
-            cell.textLabel?.text = "Delete"
+            cell.textLabel?.text = "Delete notification"
+            cell.textLabel?.textColor = UIColor(red: 255/255, green: 200/255, blue: 0/255, alpha: 1)
             cell.textLabel?.textAlignment = .center
         default:
             break
         }
-        cell.textLabel?.textColor = .white
-        cell.detailTextLabel?.textColor = .lightGray
+        
         cell.backgroundColor = .clear
         
         return cell
@@ -148,13 +151,19 @@ extension AddEditViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     //MARK: - UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
+        let row = indexPath.row
+        let section = indexPath.section
+        
+        switch section {
         case 0:
-            performSegue(withIdentifier: Id.weekdaysSegueID, sender: nil)
+            if row == 0 {
+                performSegue(withIdentifier: Id.weekdaysSegueID, sender: nil)
+            } else if row == 1 {
+                performSegue(withIdentifier: Id.soundSegueID, sender: nil)
+            }
         case 1:
-            performSegue(withIdentifier: Id.soundSegueID, sender: nil)
-        case 3:
             notificationModel.notifications.remove(at: segueInfo.currentCellIndex)
             scheduler.reSchedule()
             delegate.switchEditMode()

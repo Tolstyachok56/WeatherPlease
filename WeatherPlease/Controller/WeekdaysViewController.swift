@@ -11,17 +11,17 @@ import UIKit
 final class WeekdaysViewController: UIViewController {
     
     //MARK: - Variables
+    
     var repeatWeekdays: [Int]!
     var delegate: AddEditViewController!
 
-    //MARK: - Methods
+    //MARK: - VC Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+    //MARK: - Methods
 
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
         delegate.segueInfo.repeatWeekdays = repeatWeekdays
@@ -34,6 +34,7 @@ final class WeekdaysViewController: UIViewController {
 extension WeekdaysViewController: UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - UITableViewDataSource
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 7
     }
@@ -53,6 +54,7 @@ extension WeekdaysViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     //MARK: - UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -74,6 +76,7 @@ extension WeekdaysViewController: UITableViewDataSource, UITableViewDelegate {
 extension WeekdaysViewController {
     
     //MARK: - Static methods
+    
     static func repeatLabel(weekdays: [Int]) -> String {
         if weekdays.count == 7 {
             return "Every day"
