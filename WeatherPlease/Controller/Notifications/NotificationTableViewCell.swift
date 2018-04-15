@@ -38,6 +38,8 @@ final class NotificationTableViewCell: UITableViewCell {
         notificationSwitch.addTarget(self, action: #selector(onOffSwitchPressed(_:)), for: .valueChanged)
         self.accessoryView = notificationSwitch
         
+        self.editingAccessoryType = .disclosureIndicator
+        
         self.backgroundColor = .clear
     }
     

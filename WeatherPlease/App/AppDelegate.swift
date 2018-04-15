@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let scheduler = Scheduler()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        appDesign()
+        configureAppDesign()
         UNUserNotificationCenter.current().delegate = self
         scheduler.deactivateAllDeliveredNotifications()
         return true
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
     }
 
-    fileprivate func appDesign() {
+    fileprivate func configureAppDesign() {
         // White and notHidden status bar
         UIApplication.shared.isStatusBarHidden = false
         UIApplication.shared.statusBarStyle = .lightContent
@@ -99,7 +99,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         updateHomeViewController()
         completionHandler()
     }
-    
-    //test
     
 }
